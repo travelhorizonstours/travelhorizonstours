@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
+
   // Mobile nav toggle
   var toggle = document.querySelector('.nav-toggle');
   var nav = document.querySelector('.primary-nav');
@@ -79,4 +80,18 @@ document.addEventListener('DOMContentLoaded', function () {
       alert("This search isn't connected to live listings yet — it's a working draft of the interface.");
     });
   }
+
+  // Hero image rotator
+  (function () {
+    var slides = document.querySelectorAll('.hero-slide');
+    if (slides.length === 0) return;
+
+    var current = 0;
+    setInterval(function () {
+      slides[current].classList.remove('active');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('active');
+    }, 5000); // changes every 5 seconds
+  })();
+
 });
