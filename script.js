@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-
   // Mobile nav toggle
   var toggle = document.querySelector('.nav-toggle');
   var nav = document.querySelector('.primary-nav');
@@ -73,25 +72,33 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // Search submit: demo-only, no backend wired up
-  var form = document.querySelector('#search-form');
-  if (form) {
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      alert("This search isn't connected to live listings yet — it's a working draft of the interface.");
+  ['#search-form', '#car-search-form'].forEach(function (sel) {
+    var form = document.querySelector(sel);
+    if (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        alert("This search isn't connected to live listings yet — it's a working draft of the interface.");
+      });
+    }
+  });
+
+  // Tours page: category filter chips
+  var chips = document.querySelectorAll('.filter-chip');
+  var tourCards = document.querySelectorAll('.tour-card');
+  if (chips.length && tourCards.length) {
+    chips.forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        chips.forEach(function (c) { c.classList.remove('active'); });
+        chip.classList.add('active');
+        var cat = chip.getAttribute('data-cat');
+        tourCards.forEach(function (card) {
+          if (cat === 'all' || card.getAttribute('data-cat') === cat) {
+            card.hidden = false;
+          } else {
+            card.hidden = true;
+          }
+        });
+      });
     });
   }
-
-  // Hero image rotator
-  (function () {
-    var slides = document.querySelectorAll('.hero-slide');
-    if (slides.length === 0) return;
-
-    var current = 0;
-    setInterval(function () {
-      slides[current].classList.remove('active');
-      current = (current + 1) % slides.length;
-      slides[current].classList.add('active');
-    }, 5000); // changes every 5 seconds
-  })();
-
 });
