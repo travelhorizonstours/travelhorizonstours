@@ -1,4 +1,20 @@
 document.addEventListener('DOMContentLoaded', function () {
+  // Header: transparent over the hero image at the top of the page,
+  // solid once the visitor scrolls past it. No blur — just a color swap.
+  var header = document.querySelector('.site-header');
+  if (header) {
+    var SCROLL_THRESHOLD = 40;
+    var setScrolledState = function () {
+      if (window.scrollY > SCROLL_THRESHOLD) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    };
+    setScrolledState();
+    window.addEventListener('scroll', setScrolledState, { passive: true });
+  }
+
   // Mobile nav toggle
   var toggle = document.querySelector('.nav-toggle');
   var nav = document.querySelector('.primary-nav');
