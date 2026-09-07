@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Car Hire — Beyond Horizons Africa</title>
+<meta name="description" content="Self-drive, chauffeur-driven, safari vehicles and airport transfers across Kenya — economy cars, 4x4s, minibuses and safari Land Cruisers.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="container nav-row">
+    <a href="index.html" class="brand">
+      <img src="assets/logo.jpeg" alt="Beyond Horizons Africa logo">
+      <span class="brand-text">
+        <span class="b1">Beyond <em>Horizons</em></span>
+        <span class="b2">AFRICA</span>
+      </span>
+    </a>
+
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span>
+    </button>
+
+    <nav class="primary-nav" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="index.html#explore">Destinations</a>
+      <a href="index.html#quick-links">Accommodation</a>
+      <a href="index.html#quick-links">Transport</a>
+      <a href="tours.html">Tours &amp; Activities</a>
+      <a href="car-hire.html" aria-current="page">Car Hire</a>
+      <a href="#">Travel Guides</a>
+      <a href="#">Deals</a>
+      <a href="#">More</a>
+    </nav>
+
+    <div class="header-actions">
+      <button class="icon-btn" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="19" height="19"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </button>
+      <button class="icon-btn" aria-label="Wishlist">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="19" height="19"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"/></svg>
+      </button>
+      <a href="#" class="btn-login">Login / Sign Up</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <img class="page-hero-img" src="https://images.pexels.com/photos/14510933/pexels-photo-14510933.jpeg" alt="4x4 Land Cruiser parked on grassland with Mount Kilimanjaro in the background">
+    <div class="page-hero-overlay">
+      <p class="crumb"><a href="index.html">Home</a> · Car Hire</p>
+      <h1>Car Hire</h1>
+      <p>Self-drive, chauffeur-driven or a fully kitted safari Land Cruiser — pick a vehicle and how you want to travel.</p>
+    </div>
+  </section>
+
+  <!-- SEARCH -->
+  <div class="search-wrap" style="margin-top:-56px;">
+    <div class="container">
+      <div class="search-card">
+        <form id="car-search-form">
+          <div class="search-fields" style="grid-template-columns: 1.2fr 1fr 1fr 1fr auto;">
+            <div class="search-field">
+              <label for="c-pickup">Pickup location</label>
+              <div class="field-value">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                <input id="c-pickup" type="text" placeholder="City or airport">
+              </div>
+            </div>
+            <div class="search-field">
+              <label for="c-pickdate">Pickup date</label>
+              <div class="field-value">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>
+                <input id="c-pickdate" type="text" placeholder="Select date">
+              </div>
+            </div>
+            <div class="search-field">
+              <label for="c-returndate">Return date</label>
+              <div class="field-value">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>
+                <input id="c-returndate" type="text" placeholder="Select date">
+              </div>
+            </div>
+            <div class="search-field">
+              <label for="c-vehicle">Vehicle type</label>
+              <div class="field-value">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 13l1.5-5A2 2 0 0 1 6.4 6.5h11.2A2 2 0 0 1 19.5 8l1.5 5"/><rect x="2.5" y="13" width="19" height="5" rx="1.5"/><circle cx="7" cy="18.5" r="1.5"/><circle cx="17" cy="18.5" r="1.5"/></svg>
+                <input id="c-vehicle" type="text" placeholder="Any vehicle">
+              </div>
+            </div>
+            <button type="submit" class="search-submit">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              Search
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- HIRE OPTIONS -->
+  <section class="quick-links">
+    <div class="container">
+      <h2 style="margin-bottom:24px;">How would you like to travel?</h2>
+      <div class="quick-grid" style="grid-template-columns: repeat(4, 1fr);">
+
+        <div class="quick-item">
+          <div class="quick-badge" style="background:var(--slate);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 13l1.5-5A2 2 0 0 1 6.4 6.5h11.2A2 2 0 0 1 19.5 8l1.5 5"/><rect x="2.5" y="13" width="19" height="5" rx="1.5"/><circle cx="7" cy="18.5" r="1.5"/><circle cx="17" cy="18.5" r="1.5"/></svg>
+          </div>
+          <h3>Self-drive</h3>
+          <p>Pick up the keys and go, on your own schedule</p>
+        </div>
+
+        <div class="quick-item">
+          <div class="quick-badge" style="background:var(--navy-soft);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>
+          </div>
+          <h3>Chauffeur-driven</h3>
+          <p>A professional driver, so you can sit back</p>
+        </div>
+
+        <div class="quick-item">
+          <div class="quick-badge" style="background:var(--terracotta);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="7" cy="12" r="4"/><circle cx="17" cy="12" r="4"/><path d="M11 10h2"/></svg>
+          </div>
+          <h3>Safari vehicle</h3>
+          <p>Pop-up roof Land Cruiser with driver-guide</p>
+        </div>
+
+        <div class="quick-item">
+          <div class="quick-badge" style="background:var(--gold);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10.5 21l1.5-6.5L3 12l1-2 9-1 3-6 2 1-1.5 6.5 5 2-1 2-6-1-1 5z"/></svg>
+          </div>
+          <h3>Airport transfer</h3>
+          <p>Fixed-price pickup and drop-off, no surprises</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FILTERS -->
+  <section class="filter-bar">
+    <div class="container">
+      <div class="filter-scroll">
+        <button class="filter-chip active" data-cat="all">All vehicles</button>
+        <button class="filter-chip" data-cat="economy">Economy</button>
+        <button class="filter-chip" data-cat="suv">SUV &amp; 4x4</button>
+        <button class="filter-chip" data-cat="safari">Safari Vehicles</button>
+        <button class="filter-chip" data-cat="van">Vans &amp; Minibus</button>
+        <button class="filter-chip" data-cat="luxury">Luxury &amp; Chauffeur</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- VEHICLE GRID -->
+  <section>
+    <div class="container">
+      <div class="tours-grid">
+
+        <!-- 1 -->
+        <div class="tour-card" data-cat="economy">
+          <div class="thumb">
+            <img src="https://images.pexels.com/photos/9544521/pexels-photo-9544521.jpeg" alt="White economy sedan on a scenic road">
+            <span class="cat-badge">Economy</span>
+          </div>
+          <div class="body">
+            <h3>Toyota Axio</h3>
+            <div class="meta">
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>5 seats</span>
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11Z"/></svg>Automatic</span>
+            </div>
+            <div class="rating">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.7 5.9 6.3.6-4.7 4.4 1.3 6.3L12 17l-5.6 3.2 1.3-6.3-4.7-4.4 6.3-.6Z"/></svg>
+              4.6 (203 reviews)
+            </div>
+            <div class="price-row">
+              <span class="price">KSh 4,500<span>per day, self-drive</span></span>
+              <a href="#" class="view-btn">Book</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2 -->
+        <div class="tour-card" data-cat="suv">
+          <div class="thumb">
+            <img src="https://images.pexels.com/photos/14510937/pexels-photo-14510937.jpeg" alt="SUV parked on grassland with Mount Kilimanjaro in the background">
+            <span class="cat-badge">SUV &amp; 4x4</span>
+          </div>
+          <div class="body">
+            <h3>Toyota RAV4</h3>
+            <div class="meta">
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>5 seats</span>
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11Z"/></svg>4x4, Automatic</span>
+            </div>
+            <div class="rating">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.7 5.9 6.3.6-4.7 4.4 1.3 6.3L12 17l-5.6 3.2 1.3-6.3-4.7-4.4 6.3-.6Z"/></svg>
+              4.8 (156 reviews)
+            </div>
+            <div class="price-row">
+              <span class="price">KSh 8,500<span>per day, self-drive</span></span>
+              <a href="#" class="view-btn">Book</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 -->
+        <div class="tour-card" data-cat="safari">
+          <div class="thumb">
+            <img src="https://images.pexels.com/photos/14510933/pexels-photo-14510933.jpeg" alt="Safari Land Cruiser on grassland with Mount Kilimanjaro">
+            <span class="cat-badge">Safari Vehicle</span>
+          </div>
+          <div class="body">
+            <h3>Toyota Land Cruiser — Safari</h3>
+            <div class="meta">
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>7 seats</span>
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11Z"/></svg>Pop-up roof, driver-guide</span>
+            </div>
+            <div class="rating">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.7 5.9 6.3.6-4.7 4.4 1.3 6.3L12 17l-5.6 3.2 1.3-6.3-4.7-4.4 6.3-.6Z"/></svg>
+              4.9 (241 reviews)
+            </div>
+            <div class="price-row">
+              <span class="price">KSh 20,000<span>per day, guide included</span></span>
+              <a href="#" class="view-btn">Book</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 -->
+        <div class="tour-card" data-cat="van">
+          <div class="thumb">
+            <img src="https://images.pexels.com/photos/18029633/pexels-photo-18029633.jpeg" alt="Van parked outdoors">
+            <span class="cat-badge">Vans &amp; Minibus</span>
+          </div>
+          <div class="body">
+            <h3>Toyota HiAce</h3>
+            <div class="meta">
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>14 seats</span>
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11Z"/></svg>Group &amp; airport transfers</span>
+            </div>
+            <div class="rating">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.7 5.9 6.3.6-4.7 4.4 1.3 6.3L12 17l-5.6 3.2 1.3-6.3-4.7-4.4 6.3-.6Z"/></svg>
+              4.7 (98 reviews)
+            </div>
+            <div class="price-row">
+              <span class="price">KSh 12,000<span>per day, with driver</span></span>
+              <a href="#" class="view-btn">Book</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5 -->
+        <div class="tour-card" data-cat="luxury">
+          <div class="thumb">
+            <img src="https://images.pexels.com/photos/12463311/pexels-photo-12463311.jpeg" alt="White Mercedes-Benz on a scenic countryside road">
+            <span class="cat-badge">Luxury</span>
+          </div>
+          <div class="body">
+            <h3>Mercedes-Benz E-Class</h3>
+            <div class="meta">
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>4 seats</span>
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11Z"/></svg>Chauffeur-driven</span>
+            </div>
+            <div class="rating">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.7 5.9 6.3.6-4.7 4.4 1.3 6.3L12 17l-5.6 3.2 1.3-6.3-4.7-4.4 6.3-.6Z"/></svg>
+              4.9 (61 reviews)
+            </div>
+            <div class="price-row">
+              <span class="price">KSh 16,000<span>per day, with driver</span></span>
+              <a href="#" class="view-btn">Book</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6 -->
+        <div class="tour-card" data-cat="luxury">
+          <div class="thumb">
+            <img src="https://images.pexels.com/photos/9519974/pexels-photo-9519974.jpeg" alt="Professional driver in a suit driving a passenger">
+            <span class="cat-badge">Chauffeur Service</span>
+          </div>
+          <div class="body">
+            <h3>Toyota Prado + Driver</h3>
+            <div class="meta">
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>5 seats</span>
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11Z"/></svg>Business &amp; airport transfers</span>
+            </div>
+            <div class="rating">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.7 5.9 6.3.6-4.7 4.4 1.3 6.3L12 17l-5.6 3.2 1.3-6.3-4.7-4.4 6.3-.6Z"/></svg>
+              4.8 (117 reviews)
+            </div>
+            <div class="price-row">
+              <span class="price">KSh 15,000<span>per day, driver included</span></span>
+              <a href="#" class="view-btn">Book</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7 -->
+        <div class="tour-card" data-cat="suv">
+          <div class="thumb">
+            <img src="https://images.pexels.com/photos/14510929/pexels-photo-14510929.jpeg" alt="4x4 vehicle on African safari with Kilimanjaro in the background">
+            <span class="cat-badge">SUV &amp; 4x4</span>
+          </div>
+          <div class="body">
+            <h3>Toyota Prado</h3>
+            <div class="meta">
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>7 seats</span>
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11Z"/></svg>4x4, Automatic</span>
+            </div>
+            <div class="rating">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.7 5.9 6.3.6-4.7 4.4 1.3 6.3L12 17l-5.6 3.2 1.3-6.3-4.7-4.4 6.3-.6Z"/></svg>
+              4.8 (139 reviews)
+            </div>
+            <div class="price-row">
+              <span class="price">KSh 11,500<span>per day, self-drive</span></span>
+              <a href="#" class="view-btn">Book</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 8 -->
+        <div class="tour-card" data-cat="luxury">
+          <div class="thumb">
+            <img src="https://images.pexels.com/photos/164634/pexels-photo-164634.jpeg" alt="Luxury cars lined up at a dealership">
+            <span class="cat-badge">Corporate Fleet</span>
+          </div>
+          <div class="body">
+            <h3>Executive Fleet Hire</h3>
+            <div class="meta">
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>Multiple vehicles</span>
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11Z"/></svg>Corporate &amp; event hire</span>
+            </div>
+            <div class="rating">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.7 5.9 6.3.6-4.7 4.4 1.3 6.3L12 17l-5.6 3.2 1.3-6.3-4.7-4.4 6.3-.6Z"/></svg>
+              4.9 (44 reviews)
+            </div>
+            <div class="price-row">
+              <span class="price">Custom quote<span>per fleet, per event</span></span>
+              <a href="#" class="view-btn">Enquire</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-band" style="margin-top:56px;">
+    <div class="container">
+      <div class="cta-row">
+        <div>
+          <h2>Need a fleet for a group or event?</h2>
+          <p class="lede">Weddings, conferences, school trips or corporate travel — tell us the group size and dates and we'll quote a fleet.</p>
+        </div>
+        <div class="hero-actions">
+          <a href="#" class="btn btn-primary" style="background:var(--gold-bright); border-color:var(--gold-bright); color:var(--navy);">Request a fleet quote</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <img src="assets/logo.jpeg" alt="Beyond Horizons Africa logo">
+          <span>Beyond Horizons Africa</span>
+        </div>
+        <p>Stays, transport, tours and travel planning for every reason you're visiting Kenya.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="index.html#explore">Destinations</a></li>
+          <li><a href="#">Travel Guides</a></li>
+          <li><a href="#">Deals</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="index.html#quick-links">Accommodation</a></li>
+          <li><a href="car-hire.html">Car Hire</a></li>
+          <li><a href="tours.html">Tours &amp; Activities</a></li>
+          <li><a href="index.html#quick-links">Transport</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Partners</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:hello@beyondhorizonsafrica.com">hello@beyondhorizonsafrica.com</a></li>
+          <li><a href="tel:+254700000000">+254 700 000 000</a></li>
+          <li>Nairobi, Kenya</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Beyond Horizons Africa. All rights reserved.</span>
+      <span>Photos: Pexels contributors, used under the Pexels License.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
