@@ -596,3 +596,12 @@ footer.site-footer{
   .hero-slideshow .slide{ animation:none !important; opacity:0; }
   .hero-slideshow .slide:first-child{ opacity:1; }
 }
+.footer-bottom a {
+  color: var(--gold-bright);
+  text-decoration: none;
+  font-weight: 500;
+}
+.footer-bottom a:hover {
+  text-decoration: underline;
+  color: #fff;
+}
