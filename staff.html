@@ -4,15 +4,36 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Staff Portal — Beyond Horizons Africa</title>
-<link rel="stylesheet" href="styles.css">
 <style>
+  :root {
+    --navy: #14213D;
+    --navy-soft: #1d2e52;
+    --gold: #B87F22;
+    --gold-bright: #E5A93A;
+    --cream: #F7F3EA;
+    --rule: #E3DBC8;
+    --sans: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --serif: 'Playfair Display', Georgia, serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: var(--sans);
+    background: var(--cream);
+    color: #222;
+  }
+
+  /* ---------- LOGIN SCREEN ---------- */
   #staff-login-wrap {
     max-width: 380px;
     margin: 100px auto;
     padding: 40px 32px;
-    background: var(--white);
+    background: #fff;
     border-radius: 14px;
     box-shadow: 0 10px 40px rgba(20,33,61,0.12);
+  }
+  #staff-login-wrap .brand-line {
+    text-align: center; margin-bottom: 24px; color: var(--navy); font-family: var(--serif); font-size: 1.3rem; font-weight: 700;
   }
   #staff-login-wrap h2 { margin-top: 0; color: var(--navy); font-family: var(--serif); }
   #staff-login-wrap label { display:block; margin-bottom: 16px; font-weight: 600; font-size: 0.9rem; color: #333; }
@@ -26,61 +47,79 @@
     background: var(--gold-bright); color: var(--navy); cursor:pointer; font-size:1rem;
   }
 
-  #staff-dashboard { display:none; max-width: var(--max); margin: 0 auto; padding: 40px 20px 80px; }
-  #staff-dashboard.visible { display:block; }
-  .staff-header-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; flex-wrap:wrap; gap:12px; }
-  .staff-header-row h1 { color: var(--navy); font-family: var(--serif); margin:0; }
-  #staff-logout { background:none; border:1px solid var(--navy); color:var(--navy); padding:8px 16px; border-radius:8px; cursor:pointer; font-weight:600; }
+  /* ---------- ADMIN SHELL ---------- */
+  #staff-shell { display:none; min-height:100vh; }
+  #staff-shell.visible { display:flex; }
 
-  #bookings-table-wrap { overflow-x:auto; background:var(--white); border-radius:12px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
-  table.bookings-table { width:100%; border-collapse: collapse; font-size: 0.9rem; }
+  #sidebar {
+    width: 230px;
+    flex-shrink: 0;
+    background: var(--navy);
+    color: #fff;
+    min-height: 100vh;
+    padding: 24px 0;
+  }
+  #sidebar .sidebar-brand {
+    font-family: var(--serif); font-weight:700; font-size:1.15rem;
+    padding: 0 24px 24px; border-bottom: 1px solid rgba(255,255,255,0.12); margin-bottom: 16px;
+  }
+  #sidebar .sidebar-brand small { display:block; font-family: var(--sans); font-weight:400; font-size:0.7rem; opacity:0.7; margin-top:4px; letter-spacing:0.06em; }
+  .sidebar-item {
+    display:block; padding: 12px 24px; color: #cdd6e8; text-decoration:none; font-size:0.92rem; font-weight:600;
+    border-left: 3px solid transparent; cursor: pointer;
+  }
+  .sidebar-item.active { background: rgba(255,255,255,0.06); color:#fff; border-left-color: var(--gold-bright); }
+  .sidebar-item.disabled { opacity: 0.4; cursor: default; }
+  .sidebar-section-label { padding: 18px 24px 6px; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:#8a96b3; }
+
+  #main-panel { flex: 1; min-width:0; }
+  #topbar {
+    display:flex; justify-content:space-between; align-items:center;
+    padding: 16px 32px; background:#fff; border-bottom: 1px solid var(--rule);
+  }
+  #topbar .topbar-title { font-family: var(--serif); color: var(--navy); font-size: 1.3rem; margin:0; }
+  #topbar .topbar-actions { display:flex; gap:10px; align-items:center; }
+  #topbar .staff-name { font-size:0.85rem; color:#666; margin-right:6px; }
+  #staff-logout, #refresh-bookings {
+    padding: 8px 16px; border-radius:8px; font-weight:600; cursor:pointer; font-size: 0.88rem;
+  }
+  #refresh-bookings { background: var(--navy); color:#fff; border:none; }
+  #staff-logout { background:none; border:1px solid var(--navy); color:var(--navy); }
+
+  #content-area { padding: 28px 32px; }
+
+  /* Stat cards */
+  .stat-row { display:grid; grid-template-columns: repeat(4, 1fr); gap:18px; margin-bottom: 28px; }
+  .stat-card { background:#fff; border-radius:12px; padding: 20px 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+  .stat-card .stat-value { font-size: 1.9rem; font-weight:700; color: var(--navy); }
+  .stat-card .stat-label { font-size: 0.85rem; color: #777; margin-top:4px; }
+  .stat-card.pending .stat-value { color: #a67c00; }
+  .stat-card.confirmed .stat-value { color: #1a7f37; }
+  .stat-card.cancelled .stat-value { color: #c0392b; }
+
+  #bookings-table-wrap { overflow-x:auto; background:#fff; border-radius:12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+  table.bookings-table { width:100%; border-collapse: collapse; font-size: 0.88rem; }
   table.bookings-table th, table.bookings-table td { padding: 12px 14px; text-align:left; border-bottom: 1px solid var(--rule); white-space: nowrap; }
-  table.bookings-table th { background: var(--navy); color: var(--white); font-weight:600; }
+  table.bookings-table th { background: var(--navy); color: #fff; font-weight:600; position: sticky; top:0; }
   table.bookings-table tr:last-child td { border-bottom:none; }
   .status-select { padding:6px 8px; border-radius:6px; border:1px solid #ccc; font-size:0.85rem; }
   .status-pending { color:#a67c00; font-weight:600; }
   .status-confirmed { color:#1a7f37; font-weight:600; }
   .status-cancelled { color:#c0392b; font-weight:600; }
   #bookings-empty, #bookings-loading { padding: 40px; text-align:center; color:#666; }
-  #refresh-bookings {
-    background: var(--navy); color:#fff; border:none; padding:8px 16px; border-radius:8px; cursor:pointer; font-weight:600;
+
+  @media (max-width: 800px) {
+    #sidebar { width: 70px; }
+    #sidebar .sidebar-brand, #sidebar .sidebar-item span.label, .sidebar-section-label { display:none; }
+    .stat-row { grid-template-columns: repeat(2, 1fr); }
   }
 </style>
 </head>
 <body>
-<a href="#main" class="skip-link">Skip to content</a>
-
-<header class="site-header">
-  <div class="container nav-row">
-    <a href="index.html" class="brand">
-      <img src="logo.jpeg" alt="Beyond Horizons Africa logo">
-      <span class="brand-text">
-        <span class="b1">Beyond <em>Horizons</em></span>
-        <span class="b2">AFRICA</span>
-      </span>
-    </a>
-    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false"><span></span></button>
-    <nav class="primary-nav" aria-label="Primary">
-      <a href="index.html">Home</a>
-      <a href="destinations.html">Destinations</a>
-      <a href="accommodation.html">Accommodation</a>
-      <a href="transport.html">Transport</a>
-      <a href="tours.html">Tours &amp; Activities</a>
-      <a href="car-hire.html">Car Hire</a>
-      <a href="#">Travel Guides</a>
-      <a href="deals.html">Deals</a>
-      <a href="#">More</a>
-    </nav>
-    <div class="header-actions">
-      <a href="staff.html" class="btn-login" aria-current="page">Staff Portal</a>
-    </div>
-  </div>
-</header>
-
-<main id="main">
 
   <!-- LOGIN -->
   <div id="staff-login-wrap">
+    <div class="brand-line">Beyond Horizons Africa</div>
     <h2>Staff Login</h2>
     <form id="staff-login-form">
       <label>Username
@@ -94,50 +133,82 @@
     </form>
   </div>
 
-  <!-- DASHBOARD -->
-  <div id="staff-dashboard">
-    <div class="staff-header-row">
-      <h1>Bookings Dashboard</h1>
-      <div style="display:flex; gap:10px;">
-        <button id="refresh-bookings">Refresh</button>
-        <button id="staff-logout">Log Out</button>
+  <!-- ADMIN SHELL -->
+  <div id="staff-shell">
+    <aside id="sidebar">
+      <div class="sidebar-brand">
+        Beyond Horizons
+        <small>STAFF PORTAL</small>
+      </div>
+      <a class="sidebar-item active" data-panel="dashboard"><span class="label">Dashboard</span></a>
+      <a class="sidebar-item" data-panel="bookings"><span class="label">Bookings</span></a>
+
+      <div class="sidebar-section-label">Coming Soon</div>
+      <a class="sidebar-item disabled"><span class="label">Manage Listings</span></a>
+      <a class="sidebar-item disabled"><span class="label">Reports</span></a>
+      <a class="sidebar-item disabled"><span class="label">Staff Users</span></a>
+    </aside>
+
+    <div id="main-panel">
+      <div id="topbar">
+        <h1 class="topbar-title">Bookings Dashboard</h1>
+        <div class="topbar-actions">
+          <span class="staff-name" id="staff-welcome"></span>
+          <button id="refresh-bookings">Refresh</button>
+          <button id="staff-logout">Log Out</button>
+        </div>
+      </div>
+
+      <div id="content-area">
+        <div class="stat-row">
+          <div class="stat-card">
+            <div class="stat-value" id="stat-total">0</div>
+            <div class="stat-label">Total Bookings</div>
+          </div>
+          <div class="stat-card pending">
+            <div class="stat-value" id="stat-pending">0</div>
+            <div class="stat-label">Pending</div>
+          </div>
+          <div class="stat-card confirmed">
+            <div class="stat-value" id="stat-confirmed">0</div>
+            <div class="stat-label">Confirmed</div>
+          </div>
+          <div class="stat-card cancelled">
+            <div class="stat-value" id="stat-cancelled">0</div>
+            <div class="stat-label">Cancelled</div>
+          </div>
+        </div>
+
+        <div id="bookings-table-wrap">
+          <div id="bookings-loading">Loading bookings…</div>
+          <div id="bookings-empty" style="display:none;">No bookings yet.</div>
+          <table class="bookings-table" id="bookings-table" style="display:none;">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Received</th>
+                <th>Service</th>
+                <th>Item</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Preferred Date</th>
+                <th>Notes</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="bookings-tbody"></tbody>
+          </table>
+        </div>
       </div>
     </div>
-
-    <div id="bookings-table-wrap">
-      <div id="bookings-loading">Loading bookings…</div>
-      <div id="bookings-empty" style="display:none;">No bookings yet.</div>
-      <table class="bookings-table" id="bookings-table" style="display:none;">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Received</th>
-            <th>Service</th>
-            <th>Item</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Preferred Date</th>
-            <th>Notes</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody id="bookings-tbody"></tbody>
-      </table>
-    </div>
   </div>
 
-</main>
-
-<footer class="site-footer">
-  <div class="container">
-    <div class="footer-bottom">
-      <span>&copy; 2026 Beyond Horizons Africa. All rights reserved.</span>
-    </div>
-  </div>
-</footer>
-
-<script src="script.js"></script>
+<script>
+  // Standalone API_BASE for the staff portal (kept independent from script.js
+  // so this page never depends on the public site's script loading first)
+  var API_BASE = 'https://script.google.com/macros/s/AKfycbwYeRKY9i5XMMsubu9NpBvrk6Lrzx89ZGu2x8JMQZoYUNVcN1aY9vHt9Awjxp791CoL/exec';
+</script>
 <script src="staff.js"></script>
 </body>
 </html>
