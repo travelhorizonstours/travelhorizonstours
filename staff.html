@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Staff Portal — Beyond Horizons Africa</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  #staff-login-wrap {
+    max-width: 380px;
+    margin: 100px auto;
+    padding: 40px 32px;
+    background: var(--white);
+    border-radius: 14px;
+    box-shadow: 0 10px 40px rgba(20,33,61,0.12);
+  }
+  #staff-login-wrap h2 { margin-top: 0; color: var(--navy); font-family: var(--serif); }
+  #staff-login-wrap label { display:block; margin-bottom: 16px; font-weight: 600; font-size: 0.9rem; color: #333; }
+  #staff-login-wrap input {
+    display:block; width:100%; margin-top:6px; padding:10px 12px;
+    border:1px solid #d7dce3; border-radius:8px; font-size:0.95rem; box-sizing:border-box; font-family: var(--sans);
+  }
+  #staff-login-error { color:#c0392b; font-size:0.88rem; min-height:20px; margin-bottom: 8px; }
+  #staff-login-wrap button {
+    width:100%; padding:12px; border:none; border-radius:8px; font-weight:700;
+    background: var(--gold-bright); color: var(--navy); cursor:pointer; font-size:1rem;
+  }
+
+  #staff-dashboard { display:none; max-width: var(--max); margin: 0 auto; padding: 40px 20px 80px; }
+  #staff-dashboard.visible { display:block; }
+  .staff-header-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; flex-wrap:wrap; gap:12px; }
+  .staff-header-row h1 { color: var(--navy); font-family: var(--serif); margin:0; }
+  #staff-logout { background:none; border:1px solid var(--navy); color:var(--navy); padding:8px 16px; border-radius:8px; cursor:pointer; font-weight:600; }
+
+  #bookings-table-wrap { overflow-x:auto; background:var(--white); border-radius:12px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+  table.bookings-table { width:100%; border-collapse: collapse; font-size: 0.9rem; }
+  table.bookings-table th, table.bookings-table td { padding: 12px 14px; text-align:left; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+  table.bookings-table th { background: var(--navy); color: var(--white); font-weight:600; }
+  table.bookings-table tr:last-child td { border-bottom:none; }
+  .status-select { padding:6px 8px; border-radius:6px; border:1px solid #ccc; font-size:0.85rem; }
+  .status-pending { color:#a67c00; font-weight:600; }
+  .status-confirmed { color:#1a7f37; font-weight:600; }
+  .status-cancelled { color:#c0392b; font-weight:600; }
+  #bookings-empty, #bookings-loading { padding: 40px; text-align:center; color:#666; }
+  #refresh-bookings {
+    background: var(--navy); color:#fff; border:none; padding:8px 16px; border-radius:8px; cursor:pointer; font-weight:600;
+  }
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+
+<header class="site-header">
+  <div class="container nav-row">
+    <a href="index.html" class="brand">
+      <img src="logo.jpeg" alt="Beyond Horizons Africa logo">
+      <span class="brand-text">
+        <span class="b1">Beyond <em>Horizons</em></span>
+        <span class="b2">AFRICA</span>
+      </span>
+    </a>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false"><span></span></button>
+    <nav class="primary-nav" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="destinations.html">Destinations</a>
+      <a href="accommodation.html">Accommodation</a>
+      <a href="transport.html">Transport</a>
+      <a href="tours.html">Tours &amp; Activities</a>
+      <a href="car-hire.html">Car Hire</a>
+      <a href="#">Travel Guides</a>
+      <a href="deals.html">Deals</a>
+      <a href="#">More</a>
+    </nav>
+    <div class="header-actions">
+      <a href="staff.html" class="btn-login" aria-current="page">Staff Portal</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- LOGIN -->
+  <div id="staff-login-wrap">
+    <h2>Staff Login</h2>
+    <form id="staff-login-form">
+      <label>Username
+        <input type="text" id="staff-username" required autocomplete="username">
+      </label>
+      <label>Password
+        <input type="password" id="staff-password" required autocomplete="current-password">
+      </label>
+      <div id="staff-login-error"></div>
+      <button type="submit">Log In</button>
+    </form>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="staff-dashboard">
+    <div class="staff-header-row">
+      <h1>Bookings Dashboard</h1>
+      <div style="display:flex; gap:10px;">
+        <button id="refresh-bookings">Refresh</button>
+        <button id="staff-logout">Log Out</button>
+      </div>
+    </div>
+
+    <div id="bookings-table-wrap">
+      <div id="bookings-loading">Loading bookings…</div>
+      <div id="bookings-empty" style="display:none;">No bookings yet.</div>
+      <table class="bookings-table" id="bookings-table" style="display:none;">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Received</th>
+            <th>Service</th>
+            <th>Item</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Preferred Date</th>
+            <th>Notes</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="bookings-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-bottom">
+      <span>&copy; 2026 Beyond Horizons Africa. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script src="staff.js"></script>
+</body>
+</html>
