@@ -605,3 +605,32 @@ footer.site-footer{
   text-decoration: underline;
   color: #fff;
 }
+/* Animate the main hero heading */
+.hero h1 {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 1.1s ease-out 0.4s forwards;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.hero-eyebrow {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.9s ease-out 0.2s forwards;
+}
+
+.hero-sub {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 1s ease-out 0.7s forwards;
+}
+
+.hero-tag {
+  opacity: 0;
+  animation: fadeUp 1s ease-out 1s forwards;
+}
