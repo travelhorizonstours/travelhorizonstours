@@ -1,390 +1,733 @@
-// ==================== CONFIG ====================
-// Your Apps Script Web App URL (from Deploy > Manage deployments)
-var API_BASE = 'https://script.google.com/macros/s/AKfycbwYeRKY9i5XMMsubu9NpBvrk6Lrzx89ZGu2x8JMQZoYUNVcN1aY9vHt9Awjxp791CoL/exec';
+/* Beyond Horizons Africa — homepage styles */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap');
 
-// Which sheet backs which page's listing grid
-var PAGE_SHEET_MAP = {
-  'tours.html': 'Tours',
-  'accommodation.html': 'Accommodation',
-  'transport.html': 'Transport',
-  'car-hire.html': 'CarHire',
-  'deals.html': 'Deals'
-};
+:root{
+  --navy: #14213D;
+  --navy-soft: #2B3A5C;
+  --gold: #B87F22;
+  --gold-bright: #E5A93A;
+  --green: #3F5D3A;
+  --green-soft: #6B8F5E;
+  --khaki: #B79A63;
+  --slate: #6F8FA8;
+  --terracotta: #B5562F;
+  --cream: #F7F3EA;
+  --cream-deep: #EFE6D2;
+  --ink-soft: #55606F;
+  --white: #FFFFFF;
+  --rule: #E3DBC8;
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --max: 1240px;
+}
 
-// Map a sheet's "category"/"badge" text to the filter-chip slugs already in the HTML
-var CATEGORY_SLUGS = {
-  'Wildlife Safaris': 'wildlife',
-  'Culture & Heritage': 'culture',
-  'Beach & Coast': 'beach',
-  'Adventure & Hiking': 'adventure',
-  'Balloon Safaris': 'balloon',
-  'Economy': 'economy',
-  'SUV & 4x4': 'suv',
-  'Safari Vehicle': 'safari',
-  'Vans & Minibus': 'van',
-  'Luxury': 'luxury',
-  'Chauffeur Service': 'luxury',
-  'Corporate Fleet': 'luxury'
-};
+*, *::before, *::after{ box-sizing: border-box; }
+html{ scroll-behavior: smooth; }
+body{
+  margin:0;
+  background: var(--cream);
+  color: var(--navy);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+img{ max-width:100%; display:block; }
+a{ color: inherit; text-decoration: none; }
+button{ font-family: inherit; cursor: pointer; }
 
-document.addEventListener('DOMContentLoaded', function () {
-  // Header: transparent over the hero image at the top of the page,
-  // solid once the visitor scrolls past it. No blur — just a color swap.
-  var header = document.querySelector('.site-header');
-  if (header) {
-    var SCROLL_THRESHOLD = 40;
-    var setScrolledState = function () {
-      if (window.scrollY > SCROLL_THRESHOLD) {
-        header.classList.add('scrolled');
-      } else {
-        header.classList.remove('scrolled');
-      }
-    };
-    setScrolledState();
-    window.addEventListener('scroll', setScrolledState, { passive: true });
+.container{
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+h1, h2, h3{
+  font-family: var(--serif);
+  font-weight: 600;
+  line-height: 1.15;
+  margin: 0 0 0.5em;
+  color: var(--navy);
+}
+h2{ font-size: clamp(1.6rem, 2.6vw, 2.15rem); }
+h3{ font-size: 1.05rem; }
+p{ margin: 0 0 1em; color: var(--ink-soft); }
+
+.skip-link{
+  position:absolute; left:-999px; top:auto;
+  background: var(--navy); color: var(--cream); padding: 10px 16px;
+  z-index: 200; border-radius: 4px;
+}
+.skip-link:focus{ left: 16px; top: 16px; }
+
+/* ---------------- Header ---------------- */
+.site-header{
+  position: fixed; top: 0; left: 0; right: 0; width: 100%;
+  z-index: 100;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.site-header.scrolled{
+  background: var(--white);
+  border-bottom: 1px solid var(--rule);
+  box-shadow: 0 2px 14px rgba(20,33,61,0.08);
+}
+.site-header .container{ max-width: 1400px; }
+
+.nav-row{
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 14px 0;
+  gap: 20px;
+}
+
+.brand{ display:flex; align-items:center; gap: 12px; text-decoration:none; flex-shrink:0; }
+.brand img{ width: 46px; height: 46px; object-fit: contain; border-radius: 50%; }
+.brand-text{ display:flex; flex-direction:column; line-height:1.05; }
+.brand-text .b1{ font-family: var(--serif); font-weight:700; font-size: 1.05rem; color: var(--navy); letter-spacing:0.01em; }
+.brand-text .b1 em{ font-style:normal; color: var(--gold); }
+.brand-text .b2{ font-family: var(--sans); font-weight:600; font-size: 0.62rem; letter-spacing: 0.14em; color: var(--green); margin-top:1px; }
+
+.site-header:not(.scrolled) .brand-text .b1,
+.site-header:not(.scrolled) .brand-text .b2{
+  color: #fff;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+}
+.site-header:not(.scrolled) .brand-text .b1 em{
+  color: var(--gold-bright);
+  text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+}
+
+nav.primary-nav{
+  display:flex; align-items:center; gap: 12px; flex-wrap: nowrap;
+  overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none;
+}
+nav.primary-nav::-webkit-scrollbar{ display:none; }
+nav.primary-nav a{
+  font-size: 0.85rem;
+  color: var(--navy-soft);
+  padding: 6px 2px;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+}
+nav.primary-nav a:hover,
+nav.primary-nav a[aria-current="page"]{
+  color: var(--navy);
+  border-bottom-color: var(--gold);
+}
+.site-header:not(.scrolled) nav.primary-nav a{
+  color: #fff;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+}
+.site-header:not(.scrolled) nav.primary-nav a:hover,
+.site-header:not(.scrolled) nav.primary-nav a[aria-current="page"]{
+  color: #fff;
+  border-bottom-color: var(--gold-bright);
+}
+
+.header-actions{ display:flex; align-items:center; gap: 14px; flex-shrink:0; }
+.icon-btn{
+  display:flex; align-items:center; justify-content:center;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: transparent; border: none; color: var(--navy-soft);
+}
+.icon-btn:hover{ background: var(--cream-deep); color: var(--navy); }
+
+.btn-login{
+  font-size: 0.9rem; font-weight:600; color: var(--navy);
+  border: 1px solid var(--navy); padding: 9px 18px; border-radius: 4px;
+  white-space: nowrap;
+}
+.btn-login:hover{ background: var(--navy); color: var(--white); }
+
+.site-header:not(.scrolled) .icon-btn{ color:#fff; }
+.site-header:not(.scrolled) .icon-btn:hover{ background: rgba(255,255,255,0.16); color:#fff; }
+.site-header:not(.scrolled) .btn-login{
+  color:#fff; border-color: rgba(255,255,255,0.85);
+  text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+}
+.site-header:not(.scrolled) .btn-login:hover{ background: rgba(255,255,255,0.16); color:#fff; }
+
+.nav-toggle{
+  display:none;
+  background:none;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  width: 42px;
+  height: 38px;
+  align-items:center;
+  justify-content:center;
+}
+.nav-toggle span,
+.nav-toggle span::before,
+.nav-toggle span::after{
+  content:'';
+  display:block;
+  width:18px;
+  height:2px;
+  background: var(--navy);
+  position:relative;
+}
+.nav-toggle span::before{ position:absolute; top:-6px; }
+.nav-toggle span::after{ position:absolute; top:6px; }
+
+.site-header:not(.scrolled) .nav-toggle{ border-color: rgba(255,255,255,0.6); }
+.site-header:not(.scrolled) .nav-toggle span,
+.site-header:not(.scrolled) .nav-toggle span::before,
+.site-header:not(.scrolled) .nav-toggle span::after{ background:#fff; }
+
+/* ========== IMPROVED MOBILE NAVIGATION ========== */
+@media (max-width: 1200px){
+  nav.primary-nav{
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    background: var(--white);
+    border-bottom: 1px solid var(--rule);
+    box-shadow: 0 12px 30px rgba(20, 33, 61, 0.12);
+    padding: 8px 0 16px;
+    gap: 0;
+    z-index: 90;
   }
-
-  // Mobile nav toggle
-  var toggle = document.querySelector('.nav-toggle');
-  var nav = document.querySelector('.primary-nav');
-  if (toggle && nav) {
-    toggle.addEventListener('click', function () {
-      var isOpen = nav.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    });
+  nav.primary-nav.open{
+    display: flex;
   }
-
-  // Search tabs: switch active state and adjust field labels per category
-  var tabs = document.querySelectorAll('.search-tab');
-  var fieldConfig = {
-    accommodation: [
-      { label: 'Destination', placeholder: 'Where are you going?' },
-      { label: 'Check-in', placeholder: 'Select date' },
-      { label: 'Check-out', placeholder: 'Select date' },
-      { label: 'Travellers', placeholder: '2 Adults' }
-    ],
-    carhire: [
-      { label: 'Pickup location', placeholder: 'City or airport' },
-      { label: 'Pickup date', placeholder: 'Select date' },
-      { label: 'Return date', placeholder: 'Select date' },
-      { label: 'Vehicle type', placeholder: 'Any vehicle' }
-    ],
-    tours: [
-      { label: 'Activity or tour', placeholder: 'Safari, culture, adventure…' },
-      { label: 'Start date', placeholder: 'Select date' },
-      { label: 'Duration', placeholder: 'Any length' },
-      { label: 'Travellers', placeholder: '2 Adults' }
-    ],
-    flights: [
-      { label: 'Flying from', placeholder: 'Departure city' },
-      { label: 'Departing', placeholder: 'Select date' },
-      { label: 'Returning', placeholder: 'Select date' },
-      { label: 'Passengers', placeholder: '1 Adult' }
-    ],
-    transport: [
-      { label: 'Route', placeholder: 'From — to' },
-      { label: 'Travel date', placeholder: 'Select date' },
-      { label: 'Time', placeholder: 'Any time' },
-      { label: 'Passengers', placeholder: '1 passenger' }
-    ],
-    more: [
-      { label: 'What do you need?', placeholder: 'Event, wedding, group travel…' },
-      { label: 'Date', placeholder: 'Select date' },
-      { label: 'Location', placeholder: 'Where in Kenya?' },
-      { label: 'Group size', placeholder: 'Number of people' }
-    ]
-  };
-
-  var labels = document.querySelectorAll('.search-field label');
-  var inputs = document.querySelectorAll('.search-field input, .search-field select');
-
-  tabs.forEach(function (tab) {
-    tab.addEventListener('click', function () {
-      tabs.forEach(function (t) { t.classList.remove('active'); });
-      tab.classList.add('active');
-      var key = tab.getAttribute('data-key');
-      var config = fieldConfig[key];
-      if (!config) return;
-      labels.forEach(function (label, i) {
-        if (config[i]) label.textContent = config[i].label;
-      });
-      inputs.forEach(function (input, i) {
-        if (config[i] && input.tagName === 'INPUT') {
-          input.placeholder = config[i].placeholder;
-        }
-      });
-    });
-  });
-
-  // Search submit: demo-only, no live search index wired up
-  ['#search-form', '#car-search-form'].forEach(function (sel) {
-    var form = document.querySelector(sel);
-    if (form) {
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        alert("This search isn't connected to a live availability index yet — browse the listings below and book directly.");
-      });
-    }
-  });
-
-  // Wire up the filter chips (works for both static and dynamically loaded cards)
-  setupFilterChips();
-
-  // Load live listings from the backend, then fall back to whatever is
-  // already hardcoded in the HTML if the fetch fails for any reason.
-  loadListingGrid();
-
-  // Make any "Book"/"View"/"Enquire" buttons already in the page open the
-  // booking modal (covers the case where the fetch hasn't finished yet,
-  // or failed and we're using the static fallback cards).
-  attachBookingHandlers();
-
-  injectModalStyles();
-});
-
-// ==================== FILTER CHIPS ====================
-function setupFilterChips() {
-  var chips = document.querySelectorAll('.filter-chip');
-  if (!chips.length) return;
-
-  chips.forEach(function (chip) {
-    chip.addEventListener('click', function () {
-      chips.forEach(function (c) { c.classList.remove('active'); });
-      chip.classList.add('active');
-      var cat = chip.getAttribute('data-cat');
-      // Re-query every click so this also works on cards rendered after fetch
-      var tourCards = document.querySelectorAll('.tour-card');
-      tourCards.forEach(function (card) {
-        if (cat === 'all' || card.getAttribute('data-cat') === cat) {
-          card.hidden = false;
-        } else {
-          card.hidden = true;
-        }
-      });
-    });
-  });
+  nav.primary-nav a{
+    display: block;
+    width: 100%;
+    padding: 15px 28px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--navy) !important;
+    text-shadow: none !important;
+    border-bottom: 1px solid var(--rule);
+    border-left: 3px solid transparent;
+  }
+  nav.primary-nav a:last-child{
+    border-bottom: none;
+  }
+  nav.primary-nav a:hover,
+  nav.primary-nav a[aria-current="page"]{
+    background: var(--cream-deep);
+    border-left-color: var(--gold);
+    color: var(--navy) !important;
+  }
+  .nav-toggle{
+    display: flex;
+  }
+  .site-header.scrolled .nav-toggle{
+    border-color: var(--rule);
+  }
+  .site-header.scrolled .nav-toggle span,
+  .site-header.scrolled .nav-toggle span::before,
+  .site-header.scrolled .nav-toggle span::after{
+    background: var(--navy);
+  }
 }
 
-// ==================== LIVE LISTINGS ====================
-function currentPageFile() {
-  var path = location.pathname.split('/').pop();
-  return path || 'index.html';
+/* Prevent body scrolling when menu is open */
+body.menu-open{
+  overflow: hidden;
 }
 
-function loadListingGrid() {
-  var sheetName = PAGE_SHEET_MAP[currentPageFile()];
-  if (!sheetName) return; // this page has no listing grid (e.g. index.html)
-
-  var grid = document.querySelector('.tours-grid');
-  if (!grid) return;
-
-  fetch(API_BASE + '?action=listing&sheet=' + encodeURIComponent(sheetName))
-    .then(function (res) { return res.json(); })
-    .then(function (items) {
-      if (!items || !Array.isArray(items) || items.length === 0) {
-        // Nothing in the sheet yet — keep the static cards already in the HTML
-        return;
-      }
-
-      var isDeal = sheetName === 'Deals';
-      var visible = items.filter(function (item) {
-        return String(item.active).toUpperCase() !== 'FALSE';
-      });
-
-      grid.innerHTML = visible.map(function (item) {
-        return buildCardHTML(item, isDeal);
-      }).join('');
-
-      attachBookingHandlers();
-
-      // Re-apply whichever filter chip is currently active (default: "all")
-      var activeChip = document.querySelector('.filter-chip.active');
-      if (activeChip) activeChip.click();
-    })
-    .catch(function (err) {
-      console.warn('Live listings unavailable, showing default content.', err);
-    });
+/* Slightly tighter header on very small phones */
+@media (max-width: 480px){
+  .nav-row{ padding: 10px 0; }
+  .brand img{ width: 40px; height: 40px; }
+  .brand-text .b1{ font-size: 0.95rem; }
+  .container{ padding: 0 18px; }
 }
 
-function slugifyCategory(category) {
-  if (CATEGORY_SLUGS[category]) return CATEGORY_SLUGS[category];
-  var first = (category || '').toLowerCase().split(/[\s&]+/)[0];
-  return first || 'other';
+/* ---------------- Hero ---------------- */
+.hero{
+  position: relative;
+  overflow: hidden;
+  color: var(--white);
+}
+.hero-slideshow{
+  position: relative;
+  width:100%; height: clamp(430px, 62vw, 640px);
+}
+.hero-slideshow .slide{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit: cover;
+  opacity: 0;
+  animation: heroFade 32s infinite;
+}
+.hero-slideshow .slide:nth-child(1){ animation-delay: 0s; }
+.hero-slideshow .slide:nth-child(2){ animation-delay: 8s; }
+.hero-slideshow .slide:nth-child(3){ animation-delay: 16s; }
+.hero-slideshow .slide:nth-child(4){ animation-delay: 24s; }
+
+@keyframes heroFade{
+  0%{ opacity:0; }
+  3%{ opacity:1; }
+  22%{ opacity:1; }
+  28%{ opacity:0; }
+  100%{ opacity:0; }
 }
 
-function escapeHtml(value) {
-  return String(value == null ? '' : value).replace(/[&<>"']/g, function (c) {
-    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
-  });
+.hero-scrim{
+  position:absolute; inset:0;
+  background: linear-gradient(180deg, rgba(20,33,61,0.28) 0%, rgba(20,33,61,0.15) 40%, rgba(20,33,61,0.55) 100%);
+  pointer-events:none;
+}
+.hero-content{
+  position:absolute; inset:0;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center;
+  padding: 0 24px;
+}
+.hero-eyebrow{
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  color: #000;
+  text-shadow: 0 1px 4px rgba(255,255,255,0.35);
+  font-weight: 600;
+  display:flex; align-items:center; gap: 12px;
+  margin-bottom: 14px;
+}
+.hero-eyebrow::before, .hero-eyebrow::after{
+  content:''; width: 28px; height:1px; background: #000;
+}
+.hero h1{
+  color: var(--white);
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  max-width: 16ch;
+  text-shadow: 0 2px 18px rgba(20,33,61,0.45);
+}
+.hero-sub{
+  color: #EDEFF3;
+  max-width: 54ch;
+  font-size: 1.05rem;
+  text-shadow: 0 1px 10px rgba(20,33,61,0.4);
+}
+.hero-tag{
+  position:absolute;
+  right: 4%;
+  bottom: 30%;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--white);
+  line-height:1.25;
+  text-align:right;
+  opacity: 0.92;
+  transform: rotate(-4deg);
+  text-shadow: 0 2px 10px rgba(20,33,61,0.5);
 }
 
-function pinSvg() {
-  return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11Z"/></svg>';
+/* Hero animations */
+.hero h1 {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 1.1s ease-out 0.4s forwards;
 }
-function clockSvg() {
-  return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>';
+.hero-eyebrow {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.9s ease-out 0.2s forwards;
 }
-function starSvg() {
-  return '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.7 5.9 6.3.6-4.7 4.4 1.3 6.3L12 17l-5.6 3.2 1.3-6.3-4.7-4.4 6.3-.6Z"/></svg>';
+.hero-sub {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 1s ease-out 0.7s forwards;
 }
-
-function buildCardHTML(item, isDeal) {
-  var badgeText = isDeal ? (item.badge || '') : (item.category || '');
-  var slug = slugifyCategory(item.category || item.badge || '');
-  var buttonLabel = /enquire/i.test(item.price || '') ? 'Enquire' : (isDeal ? 'View Deal' : 'Book');
-  var title = escapeHtml(item.title);
-
-  return (
-    '<div class="tour-card" data-cat="' + slug + '">' +
-      '<div class="thumb">' +
-        '<img src="' + escapeHtml(item.image) + '" alt="' + title + '">' +
-        '<span class="cat-badge">' + escapeHtml(badgeText) + '</span>' +
-      '</div>' +
-      '<div class="body">' +
-        '<h3>' + title + '</h3>' +
-        '<div class="meta">' +
-          '<span>' + pinSvg() + escapeHtml(item.meta1) + '</span>' +
-          '<span>' + clockSvg() + escapeHtml(item.meta2) + '</span>' +
-        '</div>' +
-        '<div class="rating">' + starSvg() + ' ' + escapeHtml(item.rating) + ' (' + escapeHtml(item.reviews) + ' reviews)</div>' +
-        '<div class="price-row">' +
-          '<span class="price">' + escapeHtml(item.price) + '<span>' + escapeHtml(item.priceNote) + '</span></span>' +
-          '<a href="#" class="view-btn" data-book-title="' + title + '">' + buttonLabel + '</a>' +
-        '</div>' +
-      '</div>' +
-    '</div>'
-  );
+.hero-tag {
+  opacity: 0;
+  animation: fadeUp 1s ease-out 1s forwards;
+}
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-// ==================== BOOKING MODAL ====================
-function attachBookingHandlers() {
-  document.querySelectorAll('.view-btn').forEach(function (btn) {
-    // Avoid double-binding if this button was already wired up
-    if (btn.dataset.bookingBound) return;
-    btn.dataset.bookingBound = 'true';
+/* ---------------- Search card ---------------- */
+.search-wrap{
+  position: relative;
+  z-index: 20;
+  margin-top: -64px;
+  padding-bottom: 40px;
+}
+.search-card{
+  background: var(--white);
+  border-radius: 10px;
+  box-shadow: 0 20px 44px rgba(20,33,61,0.18);
+  overflow: hidden;
+}
+.search-tabs{
+  display:flex;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--rule);
+  padding: 10px 14px 0;
+  gap: 4px;
+}
+.search-tab{
+  display:flex; align-items:center; gap:8px;
+  background:none; border:none;
+  padding: 12px 16px;
+  font-size: 0.9rem; font-weight:600; color: var(--ink-soft);
+  border-radius: 8px 8px 0 0;
+}
+.search-tab svg{ width:16px; height:16px; }
+.search-tab:hover{ color: var(--navy); }
+.search-tab.active{ background: var(--navy); color: var(--white); }
+.search-fields{
+  display:grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr auto;
+  gap: 0;
+  align-items: stretch;
+}
+.search-field{
+  padding: 16px 22px;
+  border-right: 1px solid var(--rule);
+}
+.search-field label{
+  display:block; font-size: 0.72rem; color: var(--ink-soft); margin-bottom: 4px;
+}
+.search-field .field-value{
+  display:flex; align-items:center; gap:8px;
+  font-size: 0.94rem; font-weight:500; color: var(--navy);
+}
+.search-field .field-value svg{ width:16px; height:16px; color: var(--gold); flex-shrink:0; }
+.search-field input, .search-field select{
+  border:none; background:none; font-family:inherit; font-size:0.94rem; font-weight:500;
+  color: var(--navy); width:100%; padding:0;
+}
+.search-field input::placeholder{ color: #9AA3B0; font-weight:400; }
+.search-field input:focus, .search-field select:focus{ outline: none; }
+.search-submit{
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  background: var(--gold-bright);
+  color: var(--navy);
+  border:none;
+  font-weight:700; font-size: 0.96rem;
+  padding: 0 30px;
+  white-space: nowrap;
+}
+.search-submit:hover{ background: var(--gold); }
+.search-submit svg{ width:17px; height:17px; }
 
-    btn.addEventListener('click', function (e) {
-      e.preventDefault();
-      var card = btn.closest('.tour-card');
-      var title = btn.getAttribute('data-book-title') ||
-        (card && card.querySelector('h3') ? card.querySelector('h3').textContent : 'Enquiry');
-      var sheetName = PAGE_SHEET_MAP[currentPageFile()] || 'Enquiry';
-      openBookingModal(title, sheetName);
-    });
-  });
+@media (max-width: 900px){
+  .search-fields{ grid-template-columns: 1fr 1fr; }
+  .search-field{ border-bottom: 1px solid var(--rule); }
+  .search-submit{ grid-column: 1 / -1; padding: 16px; }
 }
 
-function openBookingModal(itemTitle, service) {
-  closeBookingModal(); // ensure only one instance at a time
+/* ---------------- Quick links ---------------- */
+.quick-links{
+  padding: 56px 0 8px;
+}
+.quick-grid{
+  display:grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 20px;
+}
+@media (max-width: 980px){ .quick-grid{ grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 620px){ .quick-grid{ grid-template-columns: repeat(2, 1fr); } }
 
-  var overlay = document.createElement('div');
-  overlay.id = 'bh-booking-overlay';
-  overlay.innerHTML =
-    '<div id="bh-booking-modal" role="dialog" aria-modal="true">' +
-      '<button type="button" id="bh-booking-close" aria-label="Close">&times;</button>' +
-      '<h3>Book: ' + escapeHtml(itemTitle) + '</h3>' +
-      '<form id="bh-booking-form">' +
-        '<label>Full name<input type="text" name="name" required></label>' +
-        '<label>Email<input type="email" name="email" required></label>' +
-        '<label>Phone<input type="tel" name="phone" placeholder="07xx xxx xxx" required></label>' +
-        '<label>Preferred date<input type="date" name="date"></label>' +
-        '<label>Notes (optional)<textarea name="notes" rows="3"></textarea></label>' +
-        '<div id="bh-booking-status" aria-live="polite"></div>' +
-        '<div class="bh-booking-actions">' +
-          '<button type="button" id="bh-booking-cancel">Cancel</button>' +
-          '<button type="submit" id="bh-booking-submit">Send Booking Request</button>' +
-        '</div>' +
-      '</form>' +
-    '</div>';
+.quick-item{
+  display:flex; flex-direction:column; align-items:center; text-align:center;
+  gap: 10px;
+  text-decoration:none;
+  border-radius: 10px;
+  padding: 6px;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.quick-item:hover{ background: var(--cream-deep); transform: translateY(-2px); }
+.quick-badge{
+  width: 58px; height: 58px; border-radius: 50%;
+  display:flex; align-items:center; justify-content:center;
+  color: var(--white);
+}
+.quick-badge svg{ width: 24px; height:24px; }
+.quick-item h3{ font-family: var(--sans); font-size:0.92rem; font-weight:600; margin:0; }
+.quick-item p{ font-size: 0.78rem; margin:0; color: var(--ink-soft); }
 
-  document.body.appendChild(overlay);
+/* ---------------- Explore ---------------- */
+.explore{ padding: 76px 0; }
+.explore-head{
+  display:flex; justify-content:space-between; align-items:flex-end; gap: 24px;
+  margin-bottom: 32px; flex-wrap: wrap;
+}
+.explore-head p{ max-width: 52ch; margin:0; }
+.btn-gold{
+  display:inline-flex; align-items:center; gap:8px;
+  background: var(--gold-bright); color: var(--navy);
+  font-weight:700; font-size:0.92rem;
+  padding: 12px 22px; border-radius: 4px; white-space:nowrap;
+}
+.btn-gold:hover{ background: var(--gold); }
+.btn-gold svg{ width:15px; height:15px; }
+.dest-row{
+  display:grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 18px;
+}
+@media (max-width: 1000px){ .dest-row{ grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 640px){ .dest-row{ grid-template-columns: repeat(2, 1fr); } }
 
-  document.getElementById('bh-booking-close').addEventListener('click', closeBookingModal);
-  document.getElementById('bh-booking-cancel').addEventListener('click', closeBookingModal);
-  overlay.addEventListener('click', function (e) {
-    if (e.target === overlay) closeBookingModal();
-  });
+.dest-card{
+  position:relative;
+  border-radius: 10px;
+  overflow:hidden;
+  aspect-ratio: 3 / 4;
+  color: var(--white);
+}
+.dest-card svg{ position:absolute; inset:0; width:100%; height:100%; }
+.dest-card img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition: transform 0.5s ease; }
+.dest-card:hover img{ transform: scale(1.06); }
+.dest-card .label{
+  position:absolute; left:0; right:0; bottom:0;
+  padding: 16px 14px;
+  background: linear-gradient(to top, rgba(20,33,61,0.85), rgba(20,33,61,0));
+}
+.dest-card .label h3{ color: var(--white); font-size: 1rem; margin:0 0 2px; }
+.dest-card .label span{ font-size: 0.76rem; opacity:0.9; display:flex; align-items:center; gap:5px; }
+.dest-card .label span svg{ width:12px; height:12px; position:static; }
 
-  document.getElementById('bh-booking-form').addEventListener('submit', function (e) {
-    e.preventDefault();
-    submitBooking(e.target, itemTitle, service);
-  });
+/* ---------------- Why travel with us ---------------- */
+.why{
+  background: var(--cream-deep);
+  padding: 56px 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.why-inner{
+  display:grid;
+  grid-template-columns: 1fr repeat(5, 1fr);
+  gap: 28px;
+  align-items:center;
+}
+@media (max-width: 1080px){
+  .why-inner{ grid-template-columns: 1fr; }
+  .why-items{ grid-template-columns: repeat(3,1fr) !important; }
+}
+.why-heading h3{ margin-bottom: 4px; font-size: 1.3rem; }
+.why-heading p{ margin:0; font-size: 0.9rem; }
+.why-items{
+  display:contents;
+}
+.why-item{ text-align:center; }
+.why-item svg{ width: 26px; height:26px; color: var(--gold); margin: 0 auto 8px; }
+.why-item h4{ font-family: var(--sans); font-size: 0.86rem; font-weight:600; margin: 0 0 2px; }
+.why-item span{ font-size: 0.76rem; color: var(--ink-soft); }
+@media (max-width: 620px){
+  .why-items{ grid-template-columns: repeat(2,1fr) !important; }
 }
 
-function closeBookingModal() {
-  var existing = document.getElementById('bh-booking-overlay');
-  if (existing) existing.remove();
+/* ---------------- Page hero (interior pages) ---------------- */
+.page-hero{
+  position: relative;
+  color: var(--white);
+  overflow: hidden;
+}
+.page-hero-img{
+  width: 100%;
+  height: clamp(300px, 34vw, 420px);
+  object-fit: cover;
+  display:block;
+}
+.page-hero-overlay{
+  position:absolute; inset:0;
+  background: linear-gradient(180deg, rgba(20,33,61,0.35) 0%, rgba(20,33,61,0.72) 100%);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; padding: 0 24px;
+}
+.page-hero-overlay .crumb{
+  font-size: 0.82rem; color: #E9DCC0; margin-bottom: 10px;
+}
+.page-hero-overlay .crumb a{ color: var(--gold-bright); text-decoration:underline; }
+.page-hero-overlay h1{
+  color: var(--white);
+  font-size: clamp(2rem, 4.4vw, 2.9rem);
+  margin-bottom: 10px;
+}
+.page-hero-overlay p{
+  color: #EDEFF3;
+  max-width: 52ch;
+  margin: 0;
 }
 
-function submitBooking(form, itemTitle, service) {
-  var statusEl = document.getElementById('bh-booking-status');
-  var submitBtn = document.getElementById('bh-booking-submit');
-  var data = new FormData(form);
-
-  var payload = {
-    action: 'book',
-    service: service,
-    itemTitle: itemTitle,
-    name: data.get('name'),
-    email: data.get('email'),
-    phone: data.get('phone'),
-    date: data.get('date'),
-    notes: data.get('notes')
-  };
-
-  submitBtn.disabled = true;
-  statusEl.textContent = 'Sending your request…';
-  statusEl.className = '';
-
-  // Content-Type text/plain avoids a CORS preflight that Apps Script can't handle
-  fetch(API_BASE, {
-    method: 'POST',
-    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    body: JSON.stringify(payload)
-  })
-    .then(function (res) { return res.json(); })
-    .then(function (result) {
-      if (result && result.success) {
-        statusEl.textContent = "Request received! We'll be in touch shortly to confirm.";
-        statusEl.className = 'bh-status-success';
-        setTimeout(closeBookingModal, 2200);
-      } else {
-        statusEl.textContent = 'Something went wrong — please try again or contact us directly.';
-        statusEl.className = 'bh-status-error';
-        submitBtn.disabled = false;
-      }
-    })
-    .catch(function () {
-      statusEl.textContent = 'Network error — please check your connection and try again.';
-      statusEl.className = 'bh-status-error';
-      submitBtn.disabled = false;
-    });
+/* ---------------- Filter bar ---------------- */
+.filter-bar{
+  padding: 28px 0 8px;
+}
+.filter-scroll{
+  display:flex; gap: 10px; flex-wrap: wrap;
+}
+.filter-chip{
+  background: var(--white);
+  border: 1px solid var(--rule);
+  color: var(--navy-soft);
+  font-size: 0.88rem; font-weight: 500;
+  padding: 9px 18px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.filter-chip:hover{ border-color: var(--gold); color: var(--navy); }
+.filter-chip.active{
+  background: var(--navy); border-color: var(--navy); color: var(--white);
 }
 
-function injectModalStyles() {
-  if (document.getElementById('bh-booking-styles')) return;
-  var style = document.createElement('style');
-  style.id = 'bh-booking-styles';
-  style.textContent =
-    '#bh-booking-overlay{position:fixed;inset:0;background:rgba(20,33,61,0.55);display:flex;' +
-    'align-items:center;justify-content:center;z-index:9999;padding:20px;}' +
-    '#bh-booking-modal{background:#fff;border-radius:14px;max-width:440px;width:100%;' +
-    'padding:28px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.3);max-height:90vh;overflow-y:auto;}' +
-    '#bh-booking-modal h3{margin:0 0 18px;color:var(--navy,#14213D);font-size:1.2rem;padding-right:24px;}' +
-    '#bh-booking-close{position:absolute;top:14px;right:16px;background:none;border:none;' +
-    'font-size:1.6rem;line-height:1;cursor:pointer;color:#888;}' +
-    '#bh-booking-form label{display:block;margin-bottom:14px;font-size:0.9rem;color:#333;font-weight:600;}' +
-    '#bh-booking-form input,#bh-booking-form textarea{display:block;width:100%;margin-top:6px;' +
-    'padding:10px 12px;border:1px solid #d7dce3;border-radius:8px;font-size:0.95rem;font-family:inherit;' +
-    'font-weight:400;box-sizing:border-box;}' +
-    '.bh-booking-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:8px;}' +
-    '#bh-booking-cancel{background:#eee;border:none;padding:10px 18px;border-radius:8px;cursor:pointer;font-weight:600;}' +
-    '#bh-booking-submit{background:var(--gold-bright,#E5A93A);color:var(--navy,#14213D);border:none;' +
-    'padding:10px 20px;border-radius:8px;cursor:pointer;font-weight:700;}' +
-    '#bh-booking-submit:disabled{opacity:0.6;cursor:not-allowed;}' +
-    '#bh-booking-status{min-height:20px;font-size:0.88rem;margin-top:4px;}' +
-    '.bh-status-success{color:#1a7f37;font-weight:600;}' +
-    '.bh-status-error{color:#c0392b;font-weight:600;}';
-  document.head.appendChild(style);
+/* ---------------- Tours grid ---------------- */
+.tours-grid{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  padding: 32px 0 12px;
+}
+@media (max-width: 1080px){ .tours-grid{ grid-template-columns: repeat(3,1fr); } }
+@media (max-width: 780px){ .tours-grid{ grid-template-columns: repeat(2,1fr); } }
+@media (max-width: 520px){ .tours-grid{ grid-template-columns: 1fr; } }
+
+.tour-card{
+  display:flex; flex-direction:column;
+  background: var(--white);
+  border-radius: 10px;
+  overflow:hidden;
+  border: 1px solid var(--rule);
+}
+.tour-card .thumb{
+  position:relative;
+  aspect-ratio: 4/3;
+  overflow:hidden;
+}
+.tour-card .thumb img{
+  width:100%; height:100%; object-fit:cover;
+}
+.tour-card .cat-badge{
+  position:absolute; top:12px; left:12px;
+  background: rgba(20,33,61,0.85);
+  color: var(--white);
+  font-size: 0.72rem; font-weight:600;
+  padding: 5px 12px;
+  border-radius: 999px;
+}
+.tour-card .body{
+  padding: 16px 18px 18px;
+  display:flex; flex-direction:column; gap: 8px; flex:1;
+}
+.tour-card h3{ font-size: 1rem; margin: 0; }
+.tour-card .meta{
+  display:flex; align-items:center; gap: 14px;
+  font-size: 0.8rem; color: var(--ink-soft);
+}
+.tour-card .meta span{ display:flex; align-items:center; gap:5px; }
+.tour-card .meta svg{ width:13px; height:13px; color: var(--gold); flex-shrink:0; }
+.tour-card .rating{
+  display:flex; align-items:center; gap:5px;
+  font-size: 0.82rem; color: var(--navy);
+  font-weight:600;
+}
+.tour-card .rating svg{ width:13px; height:13px; color: var(--gold-bright); }
+.tour-card .price-row{
+  margin-top: auto;
+  display:flex; align-items:center; justify-content:space-between;
+  padding-top: 10px;
+  border-top: 1px solid var(--rule);
+}
+.tour-card .price{ font-size: 0.95rem; color: var(--navy); font-weight:700; }
+.tour-card .price span{ font-weight:400; font-size:0.72rem; color: var(--ink-soft); display:block; }
+.tour-card .view-btn{
+  font-size: 0.82rem; font-weight:600; color: var(--navy);
+  border: 1px solid var(--navy); padding: 7px 14px; border-radius: 4px;
+}
+.tour-card .view-btn:hover{ background: var(--navy); color: var(--white); }
+.tour-card[hidden]{ display:none; }
+
+/* ---------------- Footer ---------------- */
+footer.site-footer{
+  background: var(--navy);
+  color: #C7CEDB;
+  padding: 56px 0 26px;
+}
+.footer-grid{
+  display:grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
+  gap: 32px;
+  padding-bottom: 36px;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+@media (max-width: 900px){ .footer-grid{ grid-template-columns: 1fr 1fr; } }
+
+.footer-brand{ display:flex; align-items:center; gap:10px; margin-bottom: 14px; }
+.footer-brand img{ width:38px; height:38px; }
+.footer-brand span{ font-family: var(--serif); font-weight:700; color: var(--white); font-size:1rem; }
+.footer-grid p{ color: #A6AFC1; font-size: 0.88rem; max-width: 30ch; }
+.footer-grid h4{ color: var(--white); font-size: 0.85rem; font-weight:600; margin: 0 0 14px; }
+.footer-grid ul{ list-style:none; margin:0; padding:0; }
+.footer-grid li{ margin-bottom: 9px; }
+.footer-grid a{ font-size: 0.88rem; color: #B6BECE; }
+.footer-grid a:hover{ color: var(--gold-bright); }
+
+.footer-bottom{
+  padding-top: 22px;
+  display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;
+  font-size: 0.82rem; color: #93A0B5;
+}
+.footer-bottom a {
+  color: var(--gold-bright);
+  text-decoration: none;
+  font-weight: 500;
+}
+.footer-bottom a:hover {
+  text-decoration: underline;
+  color: #fff;
 }
 
+/* ===== Social Media Icons ===== */
+.social-links{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+.social-links a{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.08);
+  transition: all 0.25s ease;
+  text-decoration: none;
+}
+.social-links a:hover,
+.social-links a:focus-visible{
+  color: #fff;
+  background: var(--gold-bright);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+}
+.social-links a:focus-visible{
+  outline: 2px solid var(--gold-bright);
+  outline-offset: 3px;
+}
+.social-links svg{
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+:focus-visible{ outline: 2px solid var(--gold-bright); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce){
+  *{ scroll-behavior: auto !important; transition:none !important; }
+  .hero-slideshow .slide{ animation:none !important; opacity:0; }
+  .hero-slideshow .slide:first-child{ opacity:1; }
+  .hero h1, .hero-eyebrow, .hero-sub, .hero-tag{
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+}
