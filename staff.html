@@ -23,33 +23,6 @@
     color: #222;
   }
 
-  /* ---------- LOGIN SCREEN ---------- */
-  #staff-login-wrap {
-    max-width: 380px;
-    margin: 100px auto;
-    padding: 40px 32px;
-    background: #fff;
-    border-radius: 14px;
-    box-shadow: 0 10px 40px rgba(20,33,61,0.12);
-  }
-  #staff-login-wrap .brand-line {
-    text-align: center; margin-bottom: 24px;
-  }
-  #staff-login-wrap .brand-line img {
-    max-width: 140px; height: auto;
-  }
-  #staff-login-wrap h2 { margin-top: 0; color: var(--navy); font-family: var(--serif); text-align: center; }
-  #staff-login-wrap label { display:block; margin-bottom: 16px; font-weight: 600; font-size: 0.9rem; color: #333; }
-  #staff-login-wrap input {
-    display:block; width:100%; margin-top:6px; padding:10px 12px;
-    border:1px solid #d7dce3; border-radius:8px; font-size:0.95rem; box-sizing:border-box; font-family: var(--sans);
-  }
-  #staff-login-error { color:#c0392b; font-size:0.88rem; min-height:20px; margin-bottom: 8px; }
-  #staff-login-wrap button {
-    width:100%; padding:12px; border:none; border-radius:8px; font-weight:700;
-    background: var(--gold-bright); color: var(--navy); cursor:pointer; font-size:1rem;
-  }
-
   /* ---------- ADMIN SHELL ---------- */
   #staff-shell { display:none; min-height:100vh; }
   #staff-shell.visible { display:flex; }
@@ -111,30 +84,76 @@
   .status-cancelled { color:#c0392b; font-weight:600; }
   #bookings-empty, #bookings-loading { padding: 40px; text-align:center; color:#666; }
 
+  /* Panel switching */
+  .content-panel { display:none; }
+  .content-panel.active { display:block; }
+
+  /* Manage Listings */
+  .listing-tabs { display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; }
+  .listing-tab {
+    padding: 8px 16px; border-radius: 999px; border:1px solid var(--rule); background:#fff;
+    cursor:pointer; font-size:0.85rem; font-weight:600; color: var(--navy);
+  }
+  .listing-tab.active { background: var(--navy); color:#fff; border-color: var(--navy); }
+
+  .listings-toolbar { display:flex; justify-content:flex-end; margin-bottom:14px; }
+  #add-listing-btn {
+    background: var(--gold-bright); color: var(--navy); border:none; padding:9px 18px;
+    border-radius:8px; font-weight:700; cursor:pointer; font-size:0.88rem;
+  }
+
+  table.listings-table { width:100%; border-collapse: collapse; font-size: 0.88rem; }
+  table.listings-table th, table.listings-table td { padding: 12px 14px; text-align:left; border-bottom: 1px solid var(--rule); }
+  table.listings-table th { background: var(--navy); color: #fff; font-weight:600; }
+  table.listings-table tr:last-child td { border-bottom:none; }
+  table.listings-table img.listing-thumb { width:48px; height:36px; object-fit:cover; border-radius:4px; display:block; }
+  .active-pill { padding:3px 10px; border-radius:999px; font-size:0.75rem; font-weight:700; }
+  .active-pill.yes { background:#d9f2df; color:#1a7f37; }
+  .active-pill.no { background:#f4d6d6; color:#a02020; }
+  .row-actions button {
+    border:none; background:none; cursor:pointer; font-size:0.82rem; font-weight:600; padding:4px 8px; border-radius:6px;
+  }
+  .row-actions .edit-btn { color: var(--navy); }
+  .row-actions .delete-btn { color:#c0392b; }
+  .row-actions button:hover { background: var(--cream); }
+
+  /* Listing add/edit modal */
+  #listing-modal-overlay {
+    position:fixed; inset:0; background:rgba(20,33,61,0.55); display:none;
+    align-items:center; justify-content:center; z-index:9999; padding:20px;
+  }
+  #listing-modal-overlay.visible { display:flex; }
+  #listing-modal {
+    background:#fff; border-radius:14px; max-width:480px; width:100%; padding:28px;
+    position:relative; box-shadow:0 20px 60px rgba(0,0,0,0.3); max-height:90vh; overflow-y:auto;
+  }
+  #listing-modal h3 { margin:0 0 18px; color: var(--navy); font-family: var(--serif); font-size:1.2rem; }
+  #listing-modal label { display:block; margin-bottom:12px; font-size:0.85rem; font-weight:600; color:#333; }
+  #listing-modal input, #listing-modal textarea {
+    display:block; width:100%; margin-top:5px; padding:9px 11px; border:1px solid #d7dce3;
+    border-radius:8px; font-size:0.92rem; font-family:inherit; box-sizing:border-box;
+  }
+  #listing-modal .two-col { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  #listing-modal .checkbox-row { display:flex; align-items:center; gap:8px; }
+  #listing-modal .checkbox-row input { width:auto; margin:0; }
+  #listing-modal-status { min-height:18px; font-size:0.85rem; margin-bottom:8px; }
+  #listing-modal-status.ok { color:#1a7f37; font-weight:600; }
+  #listing-modal-status.err { color:#c0392b; font-weight:600; }
+  .modal-actions { display:flex; gap:10px; justify-content:flex-end; margin-top:6px; }
+  .modal-actions .cancel-btn { background:#eee; border:none; padding:9px 16px; border-radius:8px; cursor:pointer; font-weight:600; }
+  .modal-actions .save-btn { background: var(--gold-bright); color: var(--navy); border:none; padding:9px 20px; border-radius:8px; cursor:pointer; font-weight:700; }
+  .modal-actions .save-btn:disabled { opacity:0.6; cursor:not-allowed; }
+  #listings-empty, #listings-loading { padding:40px; text-align:center; color:#666; background:#fff; border-radius:12px; }
+
   @media (max-width: 800px) {
     #sidebar { width: 70px; }
     #sidebar .sidebar-brand, #sidebar .sidebar-item span.label, .sidebar-section-label { display:none; }
     .stat-row { grid-template-columns: repeat(2, 1fr); }
+    #listing-modal .two-col { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
-
-  <!-- LOGIN -->
-  <div id="staff-login-wrap">
-    <div class="brand-line"><img src="logo.jpeg" alt="Beyond Horizons Africa logo"></div>
-    <h2>Staff Login</h2>
-    <form id="staff-login-form">
-      <label>Username
-        <input type="text" id="staff-username" required autocomplete="username">
-      </label>
-      <label>Password
-        <input type="password" id="staff-password" required autocomplete="current-password">
-      </label>
-      <div id="staff-login-error"></div>
-      <button type="submit">Log In</button>
-    </form>
-  </div>
 
   <!-- ADMIN SHELL -->
   <div id="staff-shell">
@@ -145,9 +164,9 @@
       </div>
       <a class="sidebar-item active" data-panel="dashboard"><span class="label">Dashboard</span></a>
       <a class="sidebar-item" data-panel="bookings"><span class="label">Bookings</span></a>
+      <a class="sidebar-item" data-panel="listings"><span class="label">Manage Listings</span></a>
 
       <div class="sidebar-section-label">Coming Soon</div>
-      <a class="sidebar-item disabled"><span class="label">Manage Listings</span></a>
       <a class="sidebar-item disabled"><span class="label">Reports</span></a>
       <a class="sidebar-item disabled"><span class="label">Staff Users</span></a>
     </aside>
@@ -163,47 +182,119 @@
       </div>
 
       <div id="content-area">
-        <div class="stat-row">
-          <div class="stat-card">
-            <div class="stat-value" id="stat-total">0</div>
-            <div class="stat-label">Total Bookings</div>
+        <div id="panel-dashboard" class="content-panel active">
+          <div class="stat-row">
+            <div class="stat-card">
+              <div class="stat-value" id="stat-total">0</div>
+              <div class="stat-label">Total Bookings</div>
+            </div>
+            <div class="stat-card pending">
+              <div class="stat-value" id="stat-pending">0</div>
+              <div class="stat-label">Pending</div>
+            </div>
+            <div class="stat-card confirmed">
+              <div class="stat-value" id="stat-confirmed">0</div>
+              <div class="stat-label">Confirmed</div>
+            </div>
+            <div class="stat-card cancelled">
+              <div class="stat-value" id="stat-cancelled">0</div>
+              <div class="stat-label">Cancelled</div>
+            </div>
           </div>
-          <div class="stat-card pending">
-            <div class="stat-value" id="stat-pending">0</div>
-            <div class="stat-label">Pending</div>
-          </div>
-          <div class="stat-card confirmed">
-            <div class="stat-value" id="stat-confirmed">0</div>
-            <div class="stat-label">Confirmed</div>
-          </div>
-          <div class="stat-card cancelled">
-            <div class="stat-value" id="stat-cancelled">0</div>
-            <div class="stat-label">Cancelled</div>
+
+          <div id="bookings-table-wrap">
+            <div id="bookings-loading">Loading bookings…</div>
+            <div id="bookings-empty" style="display:none;">No bookings yet.</div>
+            <table class="bookings-table" id="bookings-table" style="display:none;">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Received</th>
+                  <th>Service</th>
+                  <th>Item</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Preferred Date</th>
+                  <th>Notes</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="bookings-tbody"></tbody>
+            </table>
           </div>
         </div>
 
-        <div id="bookings-table-wrap">
-          <div id="bookings-loading">Loading bookings…</div>
-          <div id="bookings-empty" style="display:none;">No bookings yet.</div>
-          <table class="bookings-table" id="bookings-table" style="display:none;">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Received</th>
-                <th>Service</th>
-                <th>Item</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Preferred Date</th>
-                <th>Notes</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody id="bookings-tbody"></tbody>
-          </table>
+        <div id="panel-listings" class="content-panel">
+          <div class="listing-tabs">
+            <button class="listing-tab active" data-sheet="Tours">Tours</button>
+            <button class="listing-tab" data-sheet="Accommodation">Accommodation</button>
+            <button class="listing-tab" data-sheet="Transport">Transport</button>
+            <button class="listing-tab" data-sheet="CarHire">Car Hire</button>
+            <button class="listing-tab" data-sheet="Deals">Deals</button>
+          </div>
+
+          <div class="listings-toolbar">
+            <button id="add-listing-btn">+ Add New</button>
+          </div>
+
+          <div id="listings-loading">Loading listings…</div>
+          <div id="listings-empty" style="display:none;">No listings in this sheet yet.</div>
+          <div id="listings-table-wrap" style="overflow-x:auto; background:#fff; border-radius:12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); display:none;">
+            <table class="listings-table" id="listings-table">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Title</th>
+                  <th id="listings-category-header">Category</th>
+                  <th>Price</th>
+                  <th>Active</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="listings-tbody"></tbody>
+            </table>
+          </div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- LISTING ADD/EDIT MODAL -->
+  <div id="listing-modal-overlay">
+    <div id="listing-modal" role="dialog" aria-modal="true">
+      <h3 id="listing-modal-title">Add New Listing</h3>
+      <form id="listing-form">
+        <label>Title
+          <input type="text" name="title" required>
+        </label>
+        <label id="listing-category-label">Category
+          <input type="text" name="category" placeholder="e.g. Wildlife Safaris">
+        </label>
+        <div class="two-col">
+          <label>Meta 1 <input type="text" name="meta1" placeholder="e.g. Narok County"></label>
+          <label>Meta 2 <input type="text" name="meta2" placeholder="e.g. 3 Days"></label>
+        </div>
+        <div class="two-col">
+          <label>Rating <input type="text" name="rating" placeholder="e.g. 4.8"></label>
+          <label>Reviews <input type="text" name="reviews" placeholder="e.g. 152"></label>
+        </div>
+        <div class="two-col">
+          <label>Price <input type="text" name="price" placeholder="e.g. From KSh 45,000"></label>
+          <label>Price Note <input type="text" name="priceNote" placeholder="e.g. per person"></label>
+        </div>
+        <label>Image URL
+          <input type="text" name="image" placeholder="https://...">
+        </label>
+        <label class="checkbox-row">
+          <input type="checkbox" name="active" checked> Active (visible on the public site)
+        </label>
+        <div id="listing-modal-status"></div>
+        <div class="modal-actions">
+          <button type="button" class="cancel-btn" id="listing-modal-cancel">Cancel</button>
+          <button type="submit" class="save-btn" id="listing-modal-save">Save Listing</button>
+        </div>
+      </form>
     </div>
   </div>
 
