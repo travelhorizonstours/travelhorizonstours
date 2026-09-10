@@ -72,13 +72,31 @@
     </div>
   </section>
 
+  <!-- FILTERS -->
+  <section class="filter-bar">
+    <div class="container">
+      <div class="filter-scroll">
+        <button class="filter-chip active" data-cat="all">All</button>
+        <button class="filter-chip" data-cat="tented">Tented Camps</button>
+        <button class="filter-chip" data-cat="eco">Eco-Lodges</button>
+        <button class="filter-chip" data-cat="camping">Camping Sites</button>
+        <button class="filter-chip" data-cat="cabin">Scenic Cabins</button>
+        <button class="filter-chip" data-cat="beach">Beach Resorts</button>
+        <button class="filter-chip" data-cat="resort">Modular Resorts</button>
+        <button class="filter-chip" data-cat="retreat">Retreat Centers</button>
+        <button class="filter-chip" data-cat="city">City Hotels</button>
+        <button class="filter-chip" data-cat="guesthouse">Guesthouses</button>
+      </div>
+    </div>
+  </section>
+
   <!-- ACCOMMODATION -->
   <section class="explore" id="accommodation">
     <div class="container">
       <div class="explore-head">
         <div>
           <h2>Stays Across Kenya</h2>
-          <p>Tented safari camps, beach resorts, city hotels and budget friendly guesthouses. Book a place to rest for every leg of your trip.</p>
+          <p>Tented safari camps, eco-lodges, scenic cabins, camping sites, resorts and retreat centers — book a place to rest for every leg of your trip.</p>
         </div>
         <a href="#" class="btn-gold">
           View All Stays
@@ -88,7 +106,7 @@
 
       <div class="tours-grid">
 
-        <div class="tour-card">
+        <div class="tour-card" data-cat="tented">
           <div class="thumb">
             <img src="https://images.pexels.com/photos/14100743/pexels-photo-14100743.jpeg" alt="Tented safari camp at the edge of the wilderness">
             <span class="cat-badge">Tented Camp</span>
@@ -110,7 +128,7 @@
           </div>
         </div>
 
-        <div class="tour-card">
+        <div class="tour-card" data-cat="beach">
           <div class="thumb">
             <img src="https://images.pexels.com/photos/5563469/pexels-photo-5563469.jpeg" alt="Modern resort villa with a private pool">
             <span class="cat-badge">Beach Resort</span>
@@ -132,7 +150,7 @@
           </div>
         </div>
 
-        <div class="tour-card">
+        <div class="tour-card" data-cat="city">
           <div class="thumb">
             <img src="https://images.pexels.com/photos/17619969/pexels-photo-17619969.jpeg" alt="Modern hotel building with balconies in the city">
             <span class="cat-badge">City Hotel</span>
@@ -154,7 +172,7 @@
           </div>
         </div>
 
-        <div class="tour-card">
+        <div class="tour-card" data-cat="guesthouse">
           <div class="thumb">
             <img src="https://images.pexels.com/photos/8414418/pexels-photo-8414418.jpeg" alt="Aerial view of a coastal guesthouse pool and loungers">
             <span class="cat-badge">Guesthouse</span>
@@ -171,6 +189,116 @@
             </div>
             <div class="price-row">
               <span class="price">KSh 4,200<span>per night, self-catering</span></span>
+              <a href="#" class="view-btn">Book</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="tour-card" data-cat="eco">
+          <div class="thumb">
+            <img src="https://images.pexels.com/photos/6438733/pexels-photo-6438733.jpeg" alt="Eco-lodge built from natural materials overlooking the bush">
+            <span class="cat-badge">Eco-Lodge</span>
+          </div>
+          <div class="body">
+            <h3>Tsavo Acacia Eco-Lodge</h3>
+            <div class="meta">
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>Sleeps 2 &middot; Eco-conscious travellers</span>
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11Z"/></svg>Tsavo West</span>
+            </div>
+            <div class="rating">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.7 5.9 6.3.6-4.7 4.4 1.3 6.3L12 17l-5.6 3.2 1.3-6.3-4.7-4.4 6.3-.6Z"/></svg>
+              4.8 (63 reviews)
+            </div>
+            <div class="price-row">
+              <span class="price">KSh 16,800<span>per night, solar-powered, full board</span></span>
+              <a href="#" class="view-btn">Book</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="tour-card" data-cat="camping">
+          <div class="thumb">
+            <img src="https://images.pexels.com/photos/6271625/pexels-photo-6271625.jpeg" alt="Camping tents pitched near a scenic escarpment">
+            <span class="cat-badge">Camping Site</span>
+          </div>
+          <div class="body">
+            <h3>Hell's Gate Riverside Campsite</h3>
+            <div class="meta">
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>Family &amp; group camping</span>
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11Z"/></svg>Naivasha</span>
+            </div>
+            <div class="rating">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.7 5.9 6.3.6-4.7 4.4 1.3 6.3L12 17l-5.6 3.2 1.3-6.3-4.7-4.4 6.3-.6Z"/></svg>
+              4.6 (41 reviews)
+            </div>
+            <div class="price-row">
+              <span class="price">KSh 1,800<span>per tent, per night</span></span>
+              <a href="#" class="view-btn">Book</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="tour-card" data-cat="cabin">
+          <div class="thumb">
+            <img src="https://images.pexels.com/photos/6438778/pexels-photo-6438778.jpeg" alt="Wooden cabin with a scenic forest view">
+            <span class="cat-badge">Scenic Cabin</span>
+          </div>
+          <div class="body">
+            <h3>Aberdare Highland Cabin</h3>
+            <div class="meta">
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>Sleeps 3 &middot; Couples &amp; small families</span>
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11Z"/></svg>Aberdare Ranges</span>
+            </div>
+            <div class="rating">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.7 5.9 6.3.6-4.7 4.4 1.3 6.3L12 17l-5.6 3.2 1.3-6.3-4.7-4.4 6.3-.6Z"/></svg>
+              4.9 (37 reviews)
+            </div>
+            <div class="price-row">
+              <span class="price">KSh 9,500<span>per night, fireplace &amp; view deck</span></span>
+              <a href="#" class="view-btn">Book</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="tour-card" data-cat="resort">
+          <div class="thumb">
+            <img src="https://images.pexels.com/photos/6969831/pexels-photo-6969831.jpeg" alt="Modern modular pod-style resort units">
+            <span class="cat-badge">Modular Resort</span>
+          </div>
+          <div class="body">
+            <h3>Naivasha Pod Resort</h3>
+            <div class="meta">
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>Sleeps 2 &middot; Design-forward travellers</span>
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11Z"/></svg>Lake Naivasha</span>
+            </div>
+            <div class="rating">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.7 5.9 6.3.6-4.7 4.4 1.3 6.3L12 17l-5.6 3.2 1.3-6.3-4.7-4.4 6.3-.6Z"/></svg>
+              4.7 (29 reviews)
+            </div>
+            <div class="price-row">
+              <span class="price">KSh 13,200<span>per night, lake-view pod</span></span>
+              <a href="#" class="view-btn">Book</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="tour-card" data-cat="retreat">
+          <div class="thumb">
+            <img src="https://images.pexels.com/photos/3601456/pexels-photo-3601456.jpeg" alt="Peaceful wellness retreat center surrounded by greenery">
+            <span class="cat-badge">Retreat Center</span>
+          </div>
+          <div class="body">
+            <h3>Karura Forest Wellness Retreat</h3>
+            <div class="meta">
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>Solo &amp; group wellness stays</span>
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11Z"/></svg>Nairobi (Karura Forest)</span>
+            </div>
+            <div class="rating">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.7 5.9 6.3.6-4.7 4.4 1.3 6.3L12 17l-5.6 3.2 1.3-6.3-4.7-4.4 6.3-.6Z"/></svg>
+              4.9 (52 reviews)
+            </div>
+            <div class="price-row">
+              <span class="price">KSh 10,500<span>per night, yoga &amp; meals incl.</span></span>
               <a href="#" class="view-btn">Book</a>
             </div>
           </div>
