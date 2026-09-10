@@ -26,15 +26,7 @@ function fetchJsonWithRetry(url, options, timeoutMs) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-  // Warm up the Apps Script backend the moment this page loads — by the
-  // time someone finishes typing their username/password, the first real
-  // request has a much better chance of coming back quickly.
-  fetch(API_BASE + '?action=listing&sheet=Tours').catch(function () {});
-
-  var loginWrap = document.getElementById('staff-login-wrap');
   var shell = document.getElementById('staff-shell');
-  var loginForm = document.getElementById('staff-login-form');
-  var loginError = document.getElementById('staff-login-error');
   var logoutBtn = document.getElementById('staff-logout');
   var refreshBtn = document.getElementById('refresh-bookings');
   var welcomeEl = document.getElementById('staff-welcome');
@@ -43,59 +35,31 @@ document.addEventListener('DOMContentLoaded', function () {
     return sessionStorage.getItem('bh_staff_logged_in') === 'true';
   }
 
+  // No login form lives on this page anymore — that happens via the popup
+  // on the public site. If someone lands here directly without a valid
+  // session, send them back to the homepage instead of showing anything.
+  if (!isLoggedIn()) {
+    window.location.href = 'index.html';
+    return;
+  }
+
+  // Warm up the Apps Script backend right away so the first real data
+  // request (bookings) comes back as quickly as possible.
+  fetch(API_BASE + '?action=listing&sheet=Tours').catch(function () {});
+
   function showDashboard() {
-    loginWrap.style.display = 'none';
     shell.classList.add('visible');
     var username = sessionStorage.getItem('bh_staff_username') || '';
     welcomeEl.textContent = username ? ('Signed in as ' + username) : '';
     loadBookings();
   }
 
-  function showLogin() {
-    shell.classList.remove('visible');
-    loginWrap.style.display = 'block';
-  }
-
-  if (isLoggedIn()) {
-    showDashboard();
-  }
-
-  loginForm.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var username = document.getElementById('staff-username').value.trim();
-    var password = document.getElementById('staff-password').value;
-    var submitBtn = loginForm.querySelector('button[type="submit"]');
-    loginError.textContent = '';
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Connecting…';
-
-    fetchJsonWithRetry(API_BASE, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify({ action: 'login', username: username, password: password })
-    })
-      .then(function (result) {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Log In';
-        if (result && result.success) {
-          sessionStorage.setItem('bh_staff_logged_in', 'true');
-          sessionStorage.setItem('bh_staff_username', username);
-          showDashboard();
-        } else {
-          loginError.textContent = 'Invalid username or password.';
-        }
-      })
-      .catch(function () {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Log In';
-        loginError.textContent = 'Could not reach the server — please try again.';
-      });
-  });
+  showDashboard();
 
   logoutBtn.addEventListener('click', function () {
     sessionStorage.removeItem('bh_staff_logged_in');
     sessionStorage.removeItem('bh_staff_username');
-    showLogin();
+    window.location.href = 'index.html';
   });
 
   refreshBtn.addEventListener('click', function () {
