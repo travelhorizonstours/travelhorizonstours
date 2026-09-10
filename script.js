@@ -149,6 +149,8 @@ document.addEventListener('DOMContentLoaded', function () {
   attachBookingHandlers();
 
   injectModalStyles();
+  injectStaffLoginStyles();
+  attachStaffPortalHandler();
 });
 
 // ==================== FILTER CHIPS ====================
@@ -448,3 +450,153 @@ function injectModalStyles() {
   document.head.appendChild(style);
 }
 
+// ==================== STAFF PORTAL LOGIN POPUP ====================
+
+// Fire a lightweight, harmless request the moment the login popup opens so
+// the Apps Script backend has a head start "waking up" before the person
+// finishes typing their credentials. We don't care about the response.
+function warmUpBackend() {
+  fetch(API_BASE + '?action=listing&sheet=Tours').catch(function () {});
+}
+
+// Wraps fetch with: (1) a timeout so it never hangs forever, and (2) one
+// automatic retry on failure/timeout — this cuts down on the "click it
+// twice / refresh manually" experience caused by Apps Script cold starts.
+function fetchJsonWithRetry(url, options, timeoutMs) {
+  timeoutMs = timeoutMs || 12000;
+
+  function attempt() {
+    var controller = new AbortController();
+    var timer = setTimeout(function () { controller.abort(); }, timeoutMs);
+    var fetchOptions = Object.assign({}, options, { signal: controller.signal });
+
+    return fetch(url, fetchOptions)
+      .then(function (res) {
+        clearTimeout(timer);
+        return res.json();
+      })
+      .catch(function (err) {
+        clearTimeout(timer);
+        throw err;
+      });
+  }
+
+  return attempt().catch(function () {
+    // One silent retry after a short pause before we actually report failure
+    return new Promise(function (resolve) { setTimeout(resolve, 500); })
+      .then(attempt);
+  });
+}
+
+function attachStaffPortalHandler() {
+  var trigger = document.querySelector('.btn-login');
+  if (!trigger) return;
+
+  trigger.addEventListener('click', function (e) {
+    e.preventDefault();
+    openStaffLoginModal();
+  });
+}
+
+function openStaffLoginModal() {
+  closeStaffLoginModal();
+  warmUpBackend();
+
+  var overlay = document.createElement('div');
+  overlay.id = 'bh-staff-login-overlay';
+  overlay.innerHTML =
+    '<div id="bh-staff-login-modal" role="dialog" aria-modal="true">' +
+      '<button type="button" id="bh-staff-login-close" aria-label="Close">&times;</button>' +
+      '<h3>Staff Login</h3>' +
+      '<form id="bh-staff-login-form">' +
+        '<label>Username<input type="text" name="username" required autocomplete="username"></label>' +
+        '<label>Password<input type="password" name="password" required autocomplete="current-password"></label>' +
+        '<div id="bh-staff-login-status" aria-live="polite"></div>' +
+        '<div class="bh-booking-actions">' +
+          '<button type="button" id="bh-staff-login-cancel">Cancel</button>' +
+          '<button type="submit" id="bh-staff-login-submit">Log In</button>' +
+        '</div>' +
+      '</form>' +
+    '</div>';
+
+  document.body.appendChild(overlay);
+
+  document.getElementById('bh-staff-login-close').addEventListener('click', closeStaffLoginModal);
+  document.getElementById('bh-staff-login-cancel').addEventListener('click', closeStaffLoginModal);
+  overlay.addEventListener('click', function (e) {
+    if (e.target === overlay) closeStaffLoginModal();
+  });
+
+  document.getElementById('bh-staff-login-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    submitStaffLogin(e.target);
+  });
+}
+
+function closeStaffLoginModal() {
+  var existing = document.getElementById('bh-staff-login-overlay');
+  if (existing) existing.remove();
+}
+
+function submitStaffLogin(form) {
+  var statusEl = document.getElementById('bh-staff-login-status');
+  var submitBtn = document.getElementById('bh-staff-login-submit');
+  var data = new FormData(form);
+  var username = data.get('username');
+  var password = data.get('password');
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Logging in…';
+  statusEl.textContent = 'Connecting…';
+  statusEl.className = '';
+
+  fetchJsonWithRetry(API_BASE, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify({ action: 'login', username: username, password: password })
+  })
+    .then(function (result) {
+      if (result && result.success) {
+        sessionStorage.setItem('bh_staff_logged_in', 'true');
+        sessionStorage.setItem('bh_staff_username', username);
+        statusEl.textContent = 'Success — redirecting…';
+        statusEl.className = 'bh-status-success';
+        window.location.href = 'staff.html';
+      } else {
+        statusEl.textContent = 'Invalid username or password.';
+        statusEl.className = 'bh-status-error';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Log In';
+      }
+    })
+    .catch(function () {
+      statusEl.textContent = 'Could not reach the server — please try again.';
+      statusEl.className = 'bh-status-error';
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Log In';
+    });
+}
+
+function injectStaffLoginStyles() {
+  if (document.getElementById('bh-staff-login-styles')) return;
+  var style = document.createElement('style');
+  style.id = 'bh-staff-login-styles';
+  style.textContent =
+    '#bh-staff-login-overlay{position:fixed;inset:0;background:rgba(20,33,61,0.5);display:flex;' +
+    'align-items:center;justify-content:center;z-index:9999;padding:20px;}' +
+    '#bh-staff-login-modal{background:#fff;border-radius:14px;max-width:340px;width:100%;' +
+    'padding:26px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.3);}' +
+    '#bh-staff-login-modal h3{margin:0 0 16px;color:var(--navy,#14213D);font-size:1.1rem;text-align:center;}' +
+    '#bh-staff-login-close{position:absolute;top:12px;right:14px;background:none;border:none;' +
+    'font-size:1.5rem;line-height:1;cursor:pointer;color:#888;}' +
+    '#bh-staff-login-form label{display:block;margin-bottom:12px;font-size:0.85rem;color:#333;font-weight:600;}' +
+    '#bh-staff-login-form input{display:block;width:100%;margin-top:5px;' +
+    'padding:9px 11px;border:1px solid #d7dce3;border-radius:8px;font-size:0.92rem;font-family:inherit;' +
+    'font-weight:400;box-sizing:border-box;}' +
+    '#bh-staff-login-status{min-height:18px;font-size:0.85rem;margin-top:2px;}' +
+    '#bh-staff-login-cancel{background:#eee;border:none;padding:10px 18px;border-radius:8px;cursor:pointer;font-weight:600;}' +
+    '#bh-staff-login-submit{background:var(--gold-bright,#E5A93A);color:var(--navy,#14213D);border:none;' +
+    'padding:10px 20px;border-radius:8px;cursor:pointer;font-weight:700;}' +
+    '#bh-staff-login-submit:disabled{opacity:0.6;cursor:not-allowed;}';
+  document.head.appendChild(style);
+}
