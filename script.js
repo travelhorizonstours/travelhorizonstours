@@ -24,7 +24,16 @@ var CATEGORY_SLUGS = {
   'Vans & Minibus': 'van',
   'Luxury': 'luxury',
   'Chauffeur Service': 'luxury',
-  'Corporate Fleet': 'luxury'
+  'Corporate Fleet': 'luxury',
+  'Tented Camp': 'tented',
+  'Beach Resort': 'beach',
+  'City Hotel': 'city',
+  'Guesthouse': 'guesthouse',
+  'Eco-Lodge': 'eco',
+  'Camping Site': 'camping',
+  'Scenic Cabin': 'cabin',
+  'Modular Resort': 'resort',
+  'Retreat Center': 'retreat'
 };
 
 document.addEventListener('DOMContentLoaded', function () {
