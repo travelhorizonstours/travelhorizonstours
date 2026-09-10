@@ -265,8 +265,18 @@ document.addEventListener('DOMContentLoaded', function () {
       .then(function (items) {
         loading.style.display = 'none';
 
+        // If the backend returned an error object (e.g. an outdated Apps
+        // Script deployment that doesn't recognise this action yet), show
+        // that error directly instead of silently claiming "no listings".
+        if (items && !Array.isArray(items) && items.error) {
+          empty.style.display = 'block';
+          empty.textContent = 'Backend error: ' + items.error + ' — check the Apps Script deployment is up to date.';
+          return;
+        }
+
         if (!items || !items.length) {
           empty.style.display = 'block';
+          empty.textContent = 'No listings in this sheet yet.';
           return;
         }
 
